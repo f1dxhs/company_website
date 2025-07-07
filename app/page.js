@@ -1,5 +1,7 @@
-import WebsiteTemplate from './WebsiteTemplate'
+import HomePage from './components/HomePage'
 
 export default function Home() {
-  return <WebsiteTemplate />
+  return <HomePage />
 }
+
+
