@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronDown, Menu, X, ChevronRight, Mail, Phone, MapPin } from 'lucide-react'
@@ -8,33 +8,59 @@ import Header from './Header'
 import Footer from './Footer'
 
 export default function HomePage() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    // Observe all sections
+    const sections = document.querySelectorAll('.animate-section');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
   const featuredProducts = [
     {
       code: "DT Series",
       name: "Fixed Belt Conveyor Systems",
       description: "Universal fixed belt conveyor with advanced design for reliable bulk material transportation.",
-      image: "products/fixed-belt-conveyor-system",
+      image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop",
       slug: "fixed-belt-conveyor"
     },
     {
       code: "Tubular", 
       name: "Tubular Belt Conveyor",
       description: "Environmentally friendly enclosed design for dust-free material transport.",
-      image: "products/tubular-belt-conveyor",
+      image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
       slug: "tubular-belt-conveyor"
     },
     {
       code: "DJ Series",
       name: "Large Angle Corrugated Sidewall Conveyor",
       description: "Steep incline conveying up to 90° for space-saving vertical transport.",
-      image: "products/large-angle-conveyor",
+      image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop",
       slug: "large-angle-conveyor"
     },
     {
       code: "CBMEPTS",
       name: "Controlled Bulk Material Transfer System",
       description: "Eco-friendly transfer system with minimal dust emission and energy efficiency.",
-      image: "products/cbmepts-transfer-system",
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop",
       slug: "cbmepts"
     }
   ]
@@ -47,255 +73,496 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        .animate-section {
+          opacity: 0;
+        }
+
+        .animate-section.animate-in {
+          opacity: 1;
+        }
+
+        .animate-section.animate-in .fade-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-section.animate-in .fade-left {
+          animation: fadeInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-section.animate-in .fade-right {
+          animation: fadeInRight 0.8s ease-out forwards;
+        }
+
+        .animate-section.animate-in .scale-in {
+          animation: scaleIn 0.8s ease-out forwards;
+        }
+
+        .delay-100 {
+          animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+          animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-500 {
+          animation-delay: 0.5s;
+        }
+
+        .delay-600 {
+          animation-delay: 0.6s;
+        }
+
+        .delay-700 {
+          animation-delay: 0.7s;
+        }
+
+        .parallax-bg {
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+
+        .hover-lift {
+          transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        .hover-lift:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gradient-overlay {
+          background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(59, 130, 246, 0.85) 100%);
+        }
+
+        .text-shadow-dark {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+      `}</style>
+
       <Header />
       
-      {/* Hero Section with Background Image */}
-      <section className="relative h-screen flex items-center justify-center">
-        <div className="absolute inset-0">
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/videos/industrial-conveyor-system.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+        </div>
+
+        {/* Static Image Fallback */}
+        <div className="absolute inset-0 z-0">
           <img
-            src="hero/bulk-material-conveyor-system-industrial"
+            src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1920&h=1080&fit=crop"
             alt="DLM Heavy Industry Bulk Material Handling Systems"
-            className="w-full h-full object-cover brightness-50"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
         </div>
         
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          {/* <div className="mb-8">
-            <div className="w-24 h-24 bg-white rounded flex items-center justify-center mx-auto mb-6">
-              <span className="text-blue-900 font-bold text-10xl">DLM</span>
-            </div>
-          </div> */}
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            DongLin Machinery HEAVY INDUSTRY
-            <span className="block text-blue-300">BULK MATERIAL HANDLING</span>
+        <div className={`relative z-10 text-center text-white max-w-5xl mx-auto px-4 ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-shadow-dark">
+            <span className="block fade-up">DongLin Machinery</span>
+            <span className="block text-blue-300 mt-3 fade-up delay-200">HEAVY INDUSTRY</span>
+            <span className="block text-3xl md:text-5xl mt-4 fade-up delay-300">BULK MATERIAL HANDLING</span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Leading manufacturer of bulk material handling systems with 30+ years of experience. Delivering reliable transport solutions across industries worldwide.
+          <p className="text-xl md:text-2xl mb-10 text-gray-100 max-w-3xl mx-auto leading-relaxed fade-up delay-400">
+            Leading manufacturer of bulk material handling systems with 30+ years of experience. 
+            Delivering reliable transport solutions across industries worldwide.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={() => scrollToSection('about')} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-medium transition-all duration-300 transform hover:scale-105">
-              Learn More
+          <div className="flex flex-col sm:flex-row gap-4 justify-center fade-up delay-600">
+            <button 
+              onClick={() => scrollToSection('about')} 
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-xl"
+            >
+              Discover Our Story
             </button>
-            <button onClick={() => scrollToSection('products')} className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-lg text-lg font-medium transition-all duration-300">
-              Our Products
+            <button 
+              onClick={() => scrollToSection('products')} 
+              className="border-2 border-white/80 text-white hover:bg-white hover:text-blue-900 px-10 py-4 rounded-full text-lg font-medium transition-all duration-300 backdrop-blur-sm"
+            >
+              Explore Solutions
             </button>
           </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-white opacity-70" />
         </div>
       </section>
 
-      {/* Company Overview with Images */}
-      <section id="about" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Company Overview with Parallax Background */}
+      <section id="about" className="relative py-24 animate-section bg-gray-50">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 parallax-bg opacity-10"
+          style={{
+            backgroundImage: 'url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop")',
+          }}
+        ></div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">About DLM</h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up">About DLM</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto fade-up delay-100"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            <div className="fade-left">
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">
                 Expert of Bulk Material Transportation
               </h3>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed text-lg">
                 Sichuan DLM Heavy Industry Tech Co., LTD is a professional manufacturer specializing in bulk material handling systems. With over 30 years of industry experience and an annual production capacity of 30,000 tons, DLM provides customers with optimal material handling solutions.
               </p>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
                 Our innovative approach accelerates validation, cutting early-stage costs and maximizing ROI. We deliver reliable transport solutions across industries with durable installations, sustainable modules, and efficient service.
               </p>
-              <Link href="/about" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+              <Link href="/about" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-lg group">
                 Learn More About Us
-                <ChevronRight className="ml-2 w-4 h-4" />
+                <ChevronRight className="ml-2 w-5 h-5 transform group-hover:translate-x-2 transition-transform" />
               </Link>
             </div>
 
-            <div className="relative">
-              <img
-                src="company/dlm-manufacturing-facility"
-                alt="DLM Manufacturing Facility"
-                className="rounded-lg shadow-lg w-full"
-              />
+            <div className="relative fade-right">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl hover-lift">
+                <img
+                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
+                  alt="DLM Manufacturing Facility"
+                  className="w-full transform hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
             </div>
           </div>
 
-          {/* Key Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">30+</div>
-              <p className="text-gray-600">Years of Experience</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">66,000</div>
-              <p className="text-gray-600">m² Factory</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">500+</div>
-              <p className="text-gray-600">Employees</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">800+</div>
-              <p className="text-gray-600">Satisfied Clients</p>
-            </div>
-          </div>
-
-          {/* Capabilities Grid with Images */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="relative w-full h-48 mb-6">
-                <img
-                  src="capabilities/research-development-center"
-                  alt="Research & Development"
-                  className="rounded-lg w-full h-full object-cover"
-                />
+          {/* Key Statistics with Animation */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { value: "30+", label: "Years of Experience", delay: "delay-100" },
+              { value: "66,000", label: "m² Factory", delay: "delay-200" },
+              { value: "500+", label: "Employees", delay: "delay-300" },
+              { value: "800+", label: "Satisfied Clients", delay: "delay-400" }
+            ].map((stat, index) => (
+              <div key={index} className={`text-center scale-in ${stat.delay}`}>
+                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-2">
+                  {stat.value}
+                </div>
+                <p className="text-gray-600 font-medium">{stat.label}</p>
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Research & Development</h4>
-              <p className="text-gray-600">Technology R&D Center with advanced design capabilities</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="relative w-full h-48 mb-6">
-                <img
-                  src="capabilities/manufacturing-workshop"
-                  alt="Manufacturing"
-                  className="rounded-lg w-full h-full object-cover"
-                />
-              </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Manufacturing</h4>
-              <p className="text-gray-600">86,000m² production base with modern equipment</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="relative w-full h-48 mb-6">
-                <img
-                  src="capabilities/quality-assurance-testing"
-                  alt="Quality Assurance"
-                  className="rounded-lg w-full h-full object-cover"
-                />
-              </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Quality Assurance</h4>
-              <p className="text-gray-600">ISO certified with comprehensive quality control system</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section id="products" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Featured Products Section with Subtle Background */}
+      <section id="products" className="relative py-24 animate-section bg-gray-100">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up">Featured Products</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto mb-6 fade-up delay-100"></div>
+            <p className="text-gray-600 text-xl max-w-3xl mx-auto fade-up delay-200">
               Our comprehensive range of bulk material handling equipment meets the diverse needs of various industries.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
             {featuredProducts.map((product, index) => (
-              <div key={index} className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                <div className="relative h-64">
+              <div 
+                key={index} 
+                className={`bg-white rounded-2xl shadow-xl overflow-hidden hover-lift fade-up ${index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : index === 2 ? 'delay-300' : 'delay-400'}`}
+              >
+                <div className="relative h-72 overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute top-4 left-4">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <span className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                       {product.code}
                     </span>
                   </div>
                 </div>
                 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors">
                     {product.name}
                   </h3>
                   
-                  <p className="text-gray-600 mb-4 leading-relaxed">
+                  <p className="text-gray-600 mb-6 leading-relaxed text-lg">
                     {product.description}
                   </p>
                   
                   <Link 
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-lg group"
                   >
                     Learn More
-                    <ChevronRight className="ml-2 w-4 h-4" />
+                    <ChevronRight className="ml-2 w-5 h-5 transform group-hover:translate-x-2 transition-transform" />
                   </Link>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="text-center">
-            <Link href="/products" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+          <div className="text-center fade-up delay-600">
+            <Link href="/products" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-xl inline-flex items-center">
               View All Products
+              <ChevronRight className="ml-2 w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Industry Solutions */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Industry Solutions with Video Background */}
+      <section className="relative py-24 animate-section bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1568393691622-c7ba131d63b4?w=1920&h=1080&fit=crop"
+            alt="Industrial Background"
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 fade-up">Industry Solutions</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-6 fade-up delay-100"></div>
+            <p className="text-gray-300 text-xl max-w-3xl mx-auto fade-up delay-200">
+              Tailored conveyor solutions for diverse industries, engineered for specific operational challenges
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Mining & Minerals",
+                description: "Heavy-duty conveyor systems designed for harsh mining environments with maximum reliability.",
+                image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop",
+                link: "/solutions/mining",
+                icon: "⛏️"
+              },
+              {
+                title: "Ports & Terminals",
+                description: "High-capacity conveyor solutions for efficient loading and unloading operations.",
+                image: "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=800&h=600&fit=crop",
+                link: "/solutions/ports",
+                icon: "🚢"
+              },
+              {
+                title: "Power Generation",
+                description: "Reliable material handling systems for coal-fired and biomass power plants.",
+                image: "https://images.unsplash.com/photo-1548337138-e87d889cc369?w=800&h=600&fit=crop",
+                link: "/solutions/power",
+                icon: "⚡"
+              },
+              {
+                title: "Cement Industry",
+                description: "Specialized conveyor systems for limestone, clinker, and cement transportation.",
+                image: "https://images.unsplash.com/photo-1609557927087-f9d38ae2f32a?w=800&h=600&fit=crop",
+                link: "/solutions/cement",
+                icon: "🏗️"
+              },
+              {
+                title: "Coal Handling",
+                description: "Efficient coal transportation systems for mining and processing operations.",
+                image: "https://images.unsplash.com/photo-1547328415-88a17eeb89a9?w=800&h=600&fit=crop",
+                link: "/solutions/coal",
+                icon: "⛽"
+              }
+            ].map((solution, index) => (
+              <div 
+                key={index} 
+                className={`bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover-lift fade-up ${
+                  index === 0 ? 'delay-100' : 
+                  index === 1 ? 'delay-200' : 
+                  index === 2 ? 'delay-300' : 
+                  index === 3 ? 'delay-400' : 
+                  'delay-500'
+                }`}
+              >
+                <div className="relative h-56 overflow-hidden group">
+                  <img
+                    src={solution.image}
+                    alt={solution.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300"></div>
+                  <div className="absolute top-4 right-4 text-4xl">
+                    {solution.icon}
+                  </div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-2xl font-bold text-shadow-dark">
+                      {solution.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-gray-300 mb-4 leading-relaxed">
+                    {solution.description}
+                  </p>
+                  <Link href={solution.link} className="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold group">
+                    Learn More
+                    <ChevronRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12 fade-up delay-700">
+            <Link href="/solutions" className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-10 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-xl inline-flex items-center">
+              Explore All Solutions
+              <ChevronRight className="ml-2 w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Research & Manufacturing Ability Section */}
+      <section className="relative py-24 animate-section bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Industry Solutions</h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up">Research & Manufacturing Ability</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto mb-6 fade-up delay-100"></div>
+            <p className="text-gray-600 text-xl max-w-3xl mx-auto fade-up delay-200">
+              Advanced research capabilities and state-of-the-art manufacturing facilities
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-64">
-                <img
-                  src="solutions/mining-industry-conveyor-system"
-                  alt="Mining & Minerals"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Mining & Minerals
-                </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Heavy-duty conveyor systems designed for harsh mining environments with maximum reliability.
-                </p>
-                <Link href="/solutions/mining" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
-                  Learn More
-                  <ChevronRight className="ml-2 w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div className="relative h-64">
-                <img
-                  src="solutions/port-terminal-conveyor-system"
-                  alt="Ports & Terminals"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Ports & Terminals
-                </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  High-capacity conveyor solutions for efficient loading and unloading operations.
-                </p>
-                <Link href="/solutions/ports" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
-                  Learn More
-                  <ChevronRight className="ml-2 w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/solutions" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-              View All Solutions
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Cooperative Laboratory",
+                description: "Strategic partnerships with leading universities for cutting-edge research",
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&h=600&fit=crop",
+                link: "/research-manufacturing#cooperative-laboratory",
+                icon: "🔬"
+              },
+              {
+                title: "Scientific Research Team",
+                description: "Expert team of engineers and researchers driving innovation",
+                image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop",
+                link: "/research-manufacturing#research-team",
+                icon: "👨‍🔬"
+              },
+              {
+                title: "Manufacturing Devices",
+                description: "Advanced machinery and equipment for precision manufacturing",
+                image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
+                link: "/research-manufacturing#manufacturing-devices",
+                icon: "🏭"
+              }
+            ].map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className={`group relative overflow-hidden rounded-2xl shadow-xl hover-lift fade-up ${
+                  index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : 'delay-300'
+                }`}
+              >
+                <div className="relative h-80">
+                  {/* Background Image */}
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                  
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                    <div className="text-5xl mb-4">{item.icon}</div>
+                    <h3 className="text-2xl font-bold text-white mb-3 text-shadow-dark">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-200 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                    
+                    {/* Hover Effect */}
+                    <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="inline-flex items-center text-white font-medium">
+                        Learn More
+                        <ChevronRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

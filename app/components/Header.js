@@ -3,13 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [isProductsOpen, setIsProductsOpen] = useState(false)
-  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -21,30 +19,10 @@ export default function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
-    { 
-      name: 'Products', 
-      href: '/products',
-      submenu: [
-        { name: 'Fixed Belt Conveyor Systems', href: '/products/fixed-belt-conveyor' },
-        { name: 'Tubular Belt Conveyor', href: '/products/tubular-belt-conveyor' },
-        { name: 'Large Angle Conveyor', href: '/products/large-angle-conveyor' },
-        { name: 'Bucket Elevator Systems', href: '/products/bucket-elevator' },
-        { name: 'Tunnel Boring Conveyor', href: '/products/tunnel-boring' },
-        { name: 'CBMEPTS Transfer System', href: '/products/cbmepts' },
-      ]
-    },
-    { 
-      name: 'Solutions', 
-      href: '/solutions',
-      submenu: [
-        { name: 'Mining & Minerals', href: '/solutions/mining' },
-        { name: 'Ports & Terminals', href: '/solutions/ports' },
-        { name: 'Power Generation', href: '/solutions/power' },
-        { name: 'Cement & Building Materials', href: '/solutions/cement' },
-        { name: 'Coal & Chemical', href: '/solutions/chemical' },
-      ]
-    },
-    { name: 'Projects', href: '/projects' },
+    { name: 'Products', href: '/products' },
+    { name: 'Solutions', href: '/solutions' },
+    { name: 'Research&Manufacturing Capability', href: '/research-manufacturing' },
+    { name: 'Historical Projects', href: '/projects' },
     { name: 'Contact', href: '/contact' },
   ]
 
@@ -76,74 +54,17 @@ export default function Header() {
           <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navigation.map((item) => (
-                <div key={item.name} className="relative group">
-                  {item.submenu ? (
-                    <div className="relative">
-                      <button
-                        className={`flex items-center px-3 py-2 text-sm font-medium transition-colors ${
-                          isActive(item.href)
-                            ? 'text-blue-600'
-                            : 'text-gray-700 hover:text-blue-600'
-                        }`}
-                        onMouseEnter={() => {
-                          if (item.name === 'Products') setIsProductsOpen(true)
-                          if (item.name === 'Solutions') setIsSolutionsOpen(true)
-                        }}
-                      >
-                        {item.name}
-                        <ChevronDown className="ml-1 w-4 h-4" />
-                      </button>
-                      
-                      {/* Dropdown Menu */}
-                      <div 
-                        className={`absolute left-0 mt-1 w-80 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 ${
-                          (item.name === 'Products' && isProductsOpen) || 
-                          (item.name === 'Solutions' && isSolutionsOpen)
-                            ? 'opacity-100 visible transform translate-y-0'
-                            : 'opacity-0 invisible transform -translate-y-2'
-                        }`}
-                        onMouseEnter={() => {
-                          if (item.name === 'Products') setIsProductsOpen(true)
-                          if (item.name === 'Solutions') setIsSolutionsOpen(true)
-                        }}
-                        onMouseLeave={() => {
-                          if (item.name === 'Products') setIsProductsOpen(false)
-                          if (item.name === 'Solutions') setIsSolutionsOpen(false)
-                        }}
-                      >
-                        <div className="py-2">
-                          <Link
-                            href={item.href}
-                            className="block px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
-                          >
-                            View All {item.name}
-                          </Link>
-                          <div className="border-t border-gray-100"></div>
-                          {item.submenu.map((subItem) => (
-                            <Link
-                              key={subItem.href}
-                              href={subItem.href}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className={`px-3 py-2 text-sm font-medium transition-colors ${
-                        isActive(item.href)
-                          ? 'text-blue-600'
-                          : 'text-gray-700 hover:text-blue-600'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  )}
-                </div>
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive(item.href)
+                      ? 'text-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  {item.name}
+                </Link>
               ))}
               
               <Link
@@ -172,35 +93,18 @@ export default function Header() {
         <div className="lg:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
-              <div key={item.name}>
-                <Link
-                  href={item.href}
-                  className={`block px-3 py-2 text-base font-medium transition-colors ${
-                    isActive(item.href)
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-                
-                {/* Mobile Submenu */}
-                {item.submenu && (
-                  <div className="pl-6 space-y-1">
-                    {item.submenu.map((subItem) => (
-                      <Link
-                        key={subItem.href}
-                        href={subItem.href}
-                        className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {subItem.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`block px-3 py-2 text-base font-medium transition-colors ${
+                  isActive(item.href)
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
             ))}
             
             <Link
