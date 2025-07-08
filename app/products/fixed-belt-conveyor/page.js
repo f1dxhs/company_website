@@ -1,239 +1,352 @@
-import Image from 'next/image'
+'use client'
+
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { ChevronRight, ArrowRight } from 'lucide-react'
 
-export const metadata = {
-  title: 'DT/TD Series Fixed Belt Conveyor Systems | DLM Heavy Industry',
-  description: 'Universal fixed belt conveyor systems for reliable bulk material transportation. Standardized design with high capacity and long-distance capabilities.',
-}
+export default function DTSeriesPage() {
+  const [activeTab, setActiveTab] = useState('overview')
 
-export default function FixedBeltConveyorPage() {
-  const specifications = [
-    { property: 'Belt Width', value: '500mm - 2400mm' },
-    { property: 'Belt Speed', value: '0.8 - 6.5 m/s' },
-    { property: 'Conveying Capacity', value: 'Up to 10,000 t/h' },
-    { property: 'Conveying Distance', value: 'Up to several kilometers' },
-    { property: 'Incline Angle', value: '0° - 18°' },
-    { property: 'Operating Temperature', value: '-20°C to +40°C' },
+  // Key specifications
+  const keySpecs = [
+    { label: 'Belt Width', value: '500-2400mm', icon: '📏' },
+    { label: 'Capacity', value: 'Max 10,000 t/h', icon: '⚡' },
+    { label: 'Belt Speed', value: '0.8-6.5 m/s', icon: '🚀' },
+    { label: 'Distance', value: 'Up to kilometers', icon: '📍' }
   ]
 
-  const applications = [
-    {
-      title: 'Mining & Minerals',
-      description: 'Heavy-duty transportation for coal, ore, and mineral processing',
-      icon: '⛏️'
+  // Application industries
+  const industries = [
+    { name: 'Mining', icon: '⛏️' },
+    { name: 'Chemical', icon: '🧪' },
+    { name: 'Coal', icon: '🏭' },
+    { name: 'Building', icon: '🏗️' },
+    { name: 'Power', icon: '⚡' },
+    { name: 'Ports', icon: '🚢' }
+  ]
+
+  // Layout types with SVG representations
+  const layouts = [
+    { 
+      type: 'Horizontal',
+      svg: (
+        <svg viewBox="0 0 200 50" className="w-full h-12">
+          <line x1="20" y1="25" x2="180" y2="25" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+        </svg>
+      )
     },
-    {
-      title: 'Ports & Terminals',
-      description: 'Efficient bulk cargo handling for import/export operations',
-      icon: '🚢'
+    { 
+      type: 'Inclined',
+      svg: (
+        <svg viewBox="0 0 200 50" className="w-full h-12">
+          <line x1="20" y1="35" x2="180" y2="15" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+        </svg>
+      )
     },
-    {
-      title: 'Power Plants',
-      description: 'Coal and ash handling systems for thermal power generation',
-      icon: '⚡'
+    { 
+      type: 'Convex Curve',
+      svg: (
+        <svg viewBox="0 0 200 50" className="w-full h-12">
+          <path d="M 20 35 Q 100 5 180 35" fill="none" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+        </svg>
+      )
     },
-    {
-      title: 'Cement Industry',
-      description: 'Raw material and clinker transportation in cement production',
-      icon: '🏗️'
+    { 
+      type: 'Concave Curve',
+      svg: (
+        <svg viewBox="0 0 200 50" className="w-full h-12">
+          <path d="M 20 15 Q 100 45 180 15" fill="none" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+        </svg>
+      )
+    },
+    { 
+      type: 'Combined Curves',
+      svg: (
+        <svg viewBox="0 0 200 50" className="w-full h-12">
+          <path d="M 20 25 Q 60 10 100 25 Q 140 40 180 25" fill="none" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
+        </svg>
+      )
     }
   ]
 
-  const benefits = [
-    'Standardized design following national standards for easy maintenance',
-    'High conveying capacity suitable for large-scale operations',
-    'Long-distance transportation capability with minimal transfer points',
-    'Modular design allows for easy expansion and modification',
-    'Low operating costs with high reliability',
-    'Compatible with various auxiliary equipment and systems'
-  ]
+  // Technical parameters table data
+  const parameterTable = {
+    headers: ['Belt Width (mm)', '500', '650', '800', '1000', '1200', '1400', '1600', '1800', '2000', '2200', '2400'],
+    speeds: ['0.8', '1.0', '1.25', '1.6', '2.0', '2.5', '3.15', '4.0', '4.5', '5.0', '5.5', '6.5'],
+    data: [
+      { angle: 100, width: 500, values: [69, 87, 108, 139, 174, 217, '-', '-', '-', '-', '-', '-'] },
+      { angle: 150, width: 650, values: [127, 159, 254, 139, 318, 397, '-', '-', '-', '-', '-', '-'] },
+      { angle: 200, width: 800, values: [198, 248, 310, 397, 496, 620, 781, '-', '-', '-', '-', '-'] },
+      { angle: 300, width: 1000, values: [324, 405, 507, 649, 811, 101, 1278, 162, '-', '-', '-', '-'] },
+      { angle: 350, width: 1200, values: ['-', 593, 742, 951, 1188, 148, 1872, 237, 2674, 297, '-', '-'] },
+      { angle: 350, width: 1400, values: ['-', 825, 103, 1321, 165, 206, 2602, 330, 3718, 413, '-', '-'] },
+      { angle: 350, width: 1600, values: ['-', '-', '-', '-', 2186, 273, 3444, 437, 4920, 546, 6122, '-'] },
+      { angle: 350, width: 1800, values: ['-', '-', '-', '-', 2795, 349, 4403, 559, 6291, 698, 7829, 908] },
+      { angle: 350, width: 2000, values: ['-', '-', '-', '-', 3470, 433, 5466, 694, 7808, 867, 9717, 11277] },
+      { angle: 350, width: 2200, values: ['-', '-', '-', '-', '-', '-', 6843, 869, 9776, 10863, 1216, 14120] },
+      { angle: 350, width: 2400, values: ['-', '-', '-', '-', '-', '-', 8289, 1052, 11842, 13158, 1473, 17104] }
+    ]
+  }
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-12 bg-gradient-to-br from-blue-900 to-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <div className="mb-4">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  DT/TD Series
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Fixed Belt Conveyor Systems
-              </h1>
-              <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                Industry-standard belt conveyor systems delivering reliable, high-capacity bulk material transportation for mining, ports, and industrial applications.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact" className="bg-white text-blue-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors text-center">
-                  Request Quote
-                </Link>
-                <a href="#specifications" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-6 py-3 rounded-lg font-medium transition-colors text-center">
-                  View Specifications
-                </a>
-              </div>
-            </div>
-
-            <div className="relative">
-              <img
-                src="products/dt-series-fixed-belt-conveyor-mining-operation"
-                alt="DT Series Fixed Belt Conveyor System"
-                className="rounded-lg shadow-2xl w-full"
-              />
-            </div>
-          </div>
+      {/* Hero Section - Full Background Image */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop"
+            alt="Belt Conveyor System Background"
+            className="w-full h-full object-cover"
+          />
         </div>
-      </section>
 
-      {/* Product Overview */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Product Overview</h2>
-              <div className="prose prose-lg text-gray-600">
-                <p className="mb-6">
-                  The DT II/DT II (A) fixed belt conveyor series represents DLM's flagship product line, serving as a domestically standardized, general-purpose conveyor system. Originally based on the TD75 series and developed in accordance with international standards, these conveyors have become the industry standard for bulk material handling.
+        {/* Content Overlay */}
+        <div className="relative z-10 w-full">
+          {/* Dark overlay for text area */}
+          <div className="bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-transparent">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+              <div className="max-w-3xl">
+                <div className="mb-6">
+                  <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    DT II / DT II (A) Series
+                  </span>
+                </div>
+                
+                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                  Fixed Belt Conveyor Systems
+                </h1>
+                
+                <p className="text-xl text-gray-200 mb-8 leading-relaxed">
+                  Universal fixed belt conveyor based on TD75 and DX series, serving as domestically standardized general-purpose product line
                 </p>
-                <p className="mb-6">
-                  Our fixed belt conveyors are designed for continuous material transportation in various industries. The modular design allows for customization based on specific requirements including belt width, conveying distance, and material characteristics.
-                </p>
-                <p>
-                  With over 30 years of manufacturing experience, DLM has supplied thousands of fixed belt conveyor systems worldwide, earning a reputation for reliability, efficiency, and superior performance in demanding industrial environments.
-                </p>
-              </div>
-            </div>
 
-            <div>
-              <div className="bg-gray-50 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Facts</h3>
-                <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                    Capacity up to 10,000 t/h
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                    Belt width 500-2400mm
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                    Standardized components
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                    Modular design
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                    Low maintenance costs
-                  </li>
-                </ul>
+                {/* Key metrics */}
+                <div className="grid grid-cols-2 gap-4 mb-8 max-w-xl">
+                  {keySpecs.slice(0, 2).map((spec, index) => (
+                    <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <div className="flex items-center mb-2">
+                        <span className="text-2xl mr-3">{spec.icon}</span>
+                        <span className="text-sm text-gray-300">{spec.label}</span>
+                      </div>
+                      <p className="text-lg font-bold text-white">{spec.value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA buttons */}
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors group">
+                    Get Quote
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link href="/products" className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                    View All Products
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
       </section>
 
-      {/* Applications */}
-      <section className="py-16 bg-gray-50">
+      {/* Application Industries - Light Gray Background */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Applications</h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-              DT/TD series conveyors are versatile systems suitable for various industries and materials.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {applications.map((app, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="text-4xl mb-4">{app.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{app.title}</h3>
-                <p className="text-gray-600 text-sm">{app.description}</p>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
+            Diverse Scenarios
+          </h2>
+          <div className="flex flex-wrap justify-center gap-8">
+            {industries.map((industry, index) => (
+              <div key={index} className="text-center group">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-md mb-3 hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                  <span className="text-3xl">{industry.icon}</span>
+                </div>
+                <p className="text-sm font-medium text-gray-700">{industry.name}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Technical Specifications */}
-      <section id="specifications" className="py-16 bg-white">
+      {/* Technical Features - White Background */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Technical Specifications</h2>
-              <div className="bg-gray-50 rounded-xl overflow-hidden">
-                <table className="w-full">
-                  <thead className="bg-blue-600 text-white">
-                    <tr>
-                      <th className="px-6 py-4 text-left font-semibold">Parameter</th>
-                      <th className="px-6 py-4 text-left font-semibold">Specification</th>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Key Technical Parameters</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              The DTII(A) fixed belt conveyor is an updated iteration of the original TD75 and DX series
+            </p>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-gray-100 rounded-lg p-1 inline-flex">
+              <button
+                onClick={() => setActiveTab('overview')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === 'overview' 
+                    ? 'bg-white text-blue-600 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Overview
+              </button>
+              <button
+                onClick={() => setActiveTab('specs')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === 'specs' 
+                    ? 'bg-white text-blue-600 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Technical Parameters
+              </button>
+              <button
+                onClick={() => setActiveTab('layout')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === 'layout' 
+                    ? 'bg-white text-blue-600 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Layout
+              </button>
+            </div>
+          </div>
+
+          {/* Tab content */}
+          <div className="max-w-6xl mx-auto">
+            {activeTab === 'overview' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Standardized Design</h3>
+                  <p className="text-gray-600">Complies with national standards, universal components</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">High Performance</h3>
+                  <p className="text-gray-600">Strong conveying capacity, stable operation, low energy</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Modular System</h3>
+                  <p className="text-gray-600">Flexible configuration, quick adjustment and expansion</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'specs' && (
+              <div className="overflow-x-auto">
+                <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-lg">
+                  <thead>
+                    <tr className="bg-blue-600 text-white">
+                      <th className="px-4 py-3 text-left text-sm font-semibold" rowSpan={2}>
+                        Max lumpiness (mm)
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold" rowSpan={2}>
+                        Belt Width (mm)
+                      </th>
+                      <th className="px-4 py-3 text-center text-sm font-semibold" colSpan={12}>
+                        Belt Speed (m/s) / Conveying Capacity (t/h)
+                      </th>
+                    </tr>
+                    <tr className="bg-blue-500 text-white">
+                      {parameterTable.speeds.map((speed, index) => (
+                        <th key={index} className="px-3 py-2 text-center text-xs">
+                          {speed}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {specifications.map((spec, index) => (
-                      <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                        <td className="px-6 py-4 font-medium text-gray-900">{spec.property}</td>
-                        <td className="px-6 py-4 text-gray-600">{spec.value}</td>
+                    {parameterTable.data.map((row, rowIndex) => (
+                      <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900">{row.angle}</td>
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900">{row.width}</td>
+                        {row.values.map((value, index) => (
+                          <td key={index} className="px-3 py-3 text-sm text-center text-gray-700">
+                            {value}
+                          </td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
+            )}
 
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Benefits</h3>
-              <ul className="space-y-4">
-                {benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start">
-                    <svg className="text-green-500 mt-1 mr-3 flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
-                    </svg>
-                    <span className="text-gray-600">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8 p-6 bg-blue-50 rounded-xl">
-                <h4 className="text-lg font-bold text-gray-900 mb-3">Layout Options</h4>
-                <p className="text-gray-600 mb-3">
-                  Available in various configurations:
+            {activeTab === 'layout' && (
+              <div>
+                <p className="text-gray-600 text-center mb-8">
+                  Can be arranged in different forms according to engineering needs
                 </p>
-                <ul className="text-gray-600 space-y-1">
-                  <li>• Horizontal layout</li>
-                  <li>• Inclined layout</li>
-                  <li>• Combined horizontal and inclined</li>
-                  <li>• Multiple drive configurations</li>
-                </ul>
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {layouts.map((layout, index) => (
+                    <div key={index} className="bg-gray-50 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
+                      <div className="h-20 mb-4 flex items-center justify-center">
+                        {layout.svg}
+                      </div>
+                      <p className="font-medium text-gray-900">{layout.type}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-900">
+      {/* CTA Section - Navy Blue Background */}
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Optimize Your Material Handling?
+            Need Customized Solutions?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Contact our technical experts to design the perfect conveyor solution for your needs.
+          <p className="text-xl text-gray-300 mb-8">
+            Our technical team will provide the most suitable conveyor system design for you
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="bg-white text-blue-900 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-              Request Technical Data
+            <Link href="/contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-flex items-center justify-center">
+              Contact Us
+              <ChevronRight className="ml-2 w-5 h-5" />
             </Link>
-            <Link href="/contact" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 rounded-lg font-medium transition-colors">
-              Get Custom Quote
+            <Link href="/products" className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-lg font-medium transition-all duration-300 inline-flex items-center justify-center">
+              View More Products
             </Link>
           </div>
         </div>

@@ -1,166 +1,228 @@
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Link from 'next/link'
 
-export const metadata = {
-  title: 'Products | DLM Heavy Industry Tech',
-  description: 'Explore our comprehensive range of bulk material handling conveyor systems.',
-}
-
 export default function ProductsPage() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const sections = document.querySelectorAll('.animate-section');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
   const products = [
     {
-      code: "DT&TD Series",
-      name: "Fixed Belt Conveyor Systems",
-      description: "Universal fixed belt conveyor serving as a domestically standardized, general-purpose product line. The DT II/DT II (A) series provides reliable and efficient bulk material transportation.",
-      image: "products/dt-series-fixed-belt-conveyor-system",
-      slug: "fixed-belt-conveyor",
-      features: ["Standardized Design", "High Capacity", "Long Distance Transport", "Reliable Operation"],
-      applications: ["Mining", "Ports", "Power Plants", "Chemical Industry", "Building Materials"]
+      code: "DTII/DTII(A)",
+      name: "DTII/DTII(A) Belt Conveyor",
+      image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop",
+      slug: "fixed-belt-conveyor"
     },
     {
-      code: "Tubular",
-      name: "Tubular Belt Conveyor",
-      description: "Environmentally friendly enclosed conveyor system that prevents material spillage and dust emission. Ideal for complex terrains with steep inclines, sharp curves, and confined spaces.",
-      image: "products/tubular-belt-conveyor-enclosed-system",
-      slug: "tubular-belt-conveyor",
-      features: ["Enclosed Design", "Environment Friendly", "Flexible Routing", "Low Maintenance"],
-      applications: ["Chemical Processing", "Port Operations", "Urban Areas", "Environmental Sensitive Areas"]
+      code: "Pipe",
+      name: "Pipe Belt Conveyor",
+      image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
+      slug: "pipe-belt-conveyor"
     },
     {
       code: "DJ Series",
-      name: "Large Angle Corrugated Sidewall Conveyor",
-      description: "Capable of conveying materials at angles up to 90°, this space-saving solution is ideal for vertical or steep incline transport with corrugated sidewalls and cleats.",
-      image: "products/dj-series-large-angle-corrugated-conveyor",
-      slug: "large-angle-conveyor",
-      features: ["0-90° Conveying Angle", "Space Saving", "High Lifting Height", "Spillage Prevention"],
-      applications: ["Vertical Transport", "Limited Space Areas", "Multi-level Buildings", "Underground Mining"]
+      name: "DJ Series Large-Angle Corrugated Sidewall Belt Conveyor",
+      image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop",
+      slug: "large-angle-conveyor"
     },
     {
       code: "TDG/THG",
-      name: "Bucket Elevator Systems",
-      description: "Upgraded versions of the DT and TH series bucket elevators, suitable for industries such as cement, coal, sand and gravel, chemicals, and grain. Provides efficient vertical material handling.",
-      image: "products/tdg-thg-bucket-elevator-system",
-      slug: "bucket-elevator",
-      features: ["High Lift Height", "Large Capacity", "Compact Structure", "Multiple Discharge Options"],
-      applications: ["Cement Plants", "Coal Handling", "Grain Processing", "Chemical Industry"]
+      name: "The TDG and THG Bucket Elevators",
+      image: "https://images.unsplash.com/photo-1581091870622-1c0a0f045e9f?w=800&h=600&fit=crop",
+      slug: "bucket-elevator"
+    },
+    {
+      code: "Double Surface",
+      name: "Double Work Surface Belt Conveyor",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+      slug: "double-surface-conveyor"
+    },
+    {
+      code: "Overland",
+      name: "Long-Distance Overland Belt Conveyor System",
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop",
+      slug: "overland"
     },
     {
       code: "Tunnel",
-      name: "Tunnel Boring Continuous Conveyor",
-      description: "Specialized conveyor system for tunnel boring machines (TBM) operations. Features modular design with quick assembly and disassembly for underground construction projects.",
-      image: "products/tunnel-boring-conveyor-system-tbm",
-      slug: "tunnel-boring-conveyor",
-      features: ["Modular Design", "Quick Assembly", "Underground Operation", "Continuous Transport"],
-      applications: ["Tunnel Construction", "Underground Mining", "Subway Projects", "Water Diversion Projects"]
+      name: "Tunnel Boring Continuous Conveyor System",
+      image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop",
+      slug: "tunnel-boring"
     },
     {
       code: "CBMEPTS",
       name: "Controlled Bulk Material Transfer System",
-      description: "Eco-friendly transfer system using DEM simulation for optimized design. Minimizes dust emission, reduces material degradation, and provides energy-efficient operation.",
-      image: "products/cbmepts-controlled-transfer-system",
-      slug: "cbmepts",
-      features: ["DEM Optimized", "Dust Suppression", "Energy Efficient", "Minimal Degradation"],
-      applications: ["Transfer Points", "Loading Stations", "Multi-conveyor Systems", "Environmental Sensitive Areas"]
+      image: "https://images.unsplash.com/photo-1565186092539-acfeb6e14784?w=800&h=600&fit=crop",
+      slug: "cbmepts"
+    },
+    {
+      code: "Accessories",
+      name: "Other Conveyor Accessories",
+      image: "https://images.unsplash.com/photo-1609557927087-f9d38ae2f32a?w=800&h=600&fit=crop",
+      slug: "accessories"
     }
   ]
 
   return (
     <div className="min-h-screen bg-white">
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        .animate-section {
+          opacity: 0;
+        }
+
+        .animate-section.animate-in {
+          opacity: 1;
+        }
+
+        .animate-section.animate-in .fade-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-section.animate-in .scale-in {
+          animation: scaleIn 0.8s ease-out forwards;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        .hover-lift {
+          transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+
+        .hover-lift:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+      `}</style>
+
       <Header />
       
       <div className="pt-16">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        {/* Hero Section - 与 Research & Manufacturing 风格一致 */}
+        <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&h=800&fit=crop&q=80"
+              alt="DLM Products"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 to-gray-900/50"></div>
+          </div>
+          
+          <div className={`relative z-10 text-center text-white max-w-4xl mx-auto px-4 ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
               Our Products
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Comprehensive range of bulk material handling systems designed for reliability, efficiency, and environmental protection.
+            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
+              Comprehensive range of bulk material handling systems for every industry need
             </p>
           </div>
         </section>
 
-        {/* Products Grid */}
-        <section className="py-16 bg-white">
+        {/* Products Grid - 简化版，只显示名称 */}
+        <section className="py-20 bg-white animate-section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Product Portfolio</h2>
-              <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-                Each conveyor system is engineered to meet specific material handling challenges across various industries.
-              </p>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4 fade-up">Product Portfolio</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto fade-up delay-100"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product, index) => (
-                <div key={index} className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                  {/* Product Image */}
-                  <div className="relative h-48">
+                <Link
+                  key={index}
+                  href={`/products/${product.slug}`}
+                  className={`group bg-white rounded-2xl shadow-xl overflow-hidden hover-lift fade-up delay-${(index % 3 + 1) * 100}`}
+                >
+                  <div className="relative h-64">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent"></div>
                     <div className="absolute top-4 left-4">
-                      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                         {product.code}
                       </span>
                     </div>
-                  </div>
-                  
-                  {/* Product Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                      {product.name}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-4 leading-relaxed text-sm">
-                      {product.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-2">Key Features:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {product.features.slice(0, 3).map((feature, featureIndex) => (
-                          <span key={featureIndex} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <h3 className="text-xl font-bold text-white group-hover:text-blue-200 transition-colors">
+                        {product.name}
+                      </h3>
                     </div>
-                    
-                    <Link 
-                      href={`/products/${product.slug}`}
-                      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
-                    >
-                      Learn More
-                      <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-700 animate-section">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl font-bold text-white mb-4 fade-up">
               Need Custom Solutions?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Our technical team can design and manufacture customized conveyor systems to meet your specific bulk material handling requirements.
+            <p className="text-xl text-blue-100 mb-8 fade-up delay-100">
+              Our technical team can design and manufacture customized conveyor systems
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center fade-up delay-200">
+              <Link href="/contact" className="bg-white text-blue-900 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors transform hover:scale-105">
                 Contact Technical Team
               </Link>
-              <Link href="/solutions" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-lg font-medium transition-colors">
+              <Link href="/solutions" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-3 rounded-lg font-medium transition-all duration-300">
                 View Industry Solutions
               </Link>
             </div>

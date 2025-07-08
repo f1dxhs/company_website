@@ -294,69 +294,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Our Capabilities with Enhanced Design */}
-        <section className="py-20 bg-white animate-section">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4 fade-up">Our Capabilities</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto mb-6 fade-up delay-100"></div>
-              <p className="text-gray-600 text-xl max-w-3xl mx-auto fade-up delay-200">
-                Comprehensive expertise across design, manufacturing, and service
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {[
-                {
-                  icon: "R&D",
-                  title: "Research & Development",
-                  description: "66,000m² Technology R&D Center with advanced design capabilities and professional engineering team.",
-                  image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&h=300&fit=crop&q=80",
-                  color: "from-blue-500 to-blue-600"
-                },
-                {
-                  icon: "MFG",
-                  title: "Manufacturing",
-                  description: "86,000m² production base with annual capacity of 30,000 tons and advanced manufacturing equipment.",
-                  image: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=400&h=300&fit=crop&q=80",
-                  color: "from-green-500 to-green-600"
-                },
-                {
-                  icon: "QA",
-                  title: "Quality Assurance",
-                  description: "ISO 9001, ISO 14001, ISO 45001 certified with comprehensive quality control system.",
-                  image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&q=80",
-                  color: "from-purple-500 to-purple-600"
-                }
-              ].map((capability, index) => (
-                <div key={index} className={`bg-white rounded-2xl shadow-xl overflow-hidden hover-lift fade-up ${
-                  index === 0 ? 'delay-100' : 
-                  index === 1 ? 'delay-200' : 
-                  'delay-300'
-                }`}>
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={capability.image}
-                      alt={capability.title}
-                      className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className={`absolute inset-0 bg-gradient-to-br ${capability.color} opacity-80`}></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold text-white">{capability.icon}</span>
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">{capability.title}</h3>
-                    <p className="text-gray-600 text-center leading-relaxed">
-                      {capability.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Key Statistics with Animation */}
         <section className="relative py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 animate-section">
           {/* Background Image */}

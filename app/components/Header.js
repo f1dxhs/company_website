@@ -16,13 +16,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // 导航结构
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/about' },
+    { name: 'About', href: '/about' },
     { name: 'Products', href: '/products' },
     { name: 'Solutions', href: '/solutions' },
-    { name: 'Research&Manufacturing Capability', href: '/research-manufacturing' },
-    { name: 'Historical Projects', href: '/projects' },
+    { name: 'Capabilities', href: '/research-manufacturing' },
     { name: 'Contact', href: '/contact' },
   ]
 
@@ -35,29 +35,29 @@ export default function Header() {
 
   return (
     <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      scrollY > 50 ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
+      scrollY > 50 ? 'bg-white shadow-md' : 'bg-white/98 backdrop-blur-sm shadow-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-blue-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xl">DLM</span>
+          <Link href="/" className="flex items-center space-x-3 flex-shrink-0">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
+              <span className="text-white font-bold text-2xl">DLM</span>
             </div>
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-blue-900">DLM</h1>
-              <p className="text-xs text-gray-600">Heavy Industry Tech</p>
+              <h1 className="text-2xl font-bold text-gray-900">DLM</h1>
+              <p className="text-xs text-gray-500 whitespace-nowrap font-medium">Heavy Industry Tech</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="flex items-center space-x-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`px-5 py-3 text-xl font-medium transition-all duration-200 rounded-md hover:bg-gray-50 whitespace-nowrap ${
                     isActive(item.href)
                       ? 'text-blue-600'
                       : 'text-gray-700 hover:text-blue-600'
@@ -66,13 +66,6 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
-              
-              <Link
-                href="/contact"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors ml-4"
-              >
-                Get Quote
-              </Link>
             </div>
           </div>
 
@@ -80,7 +73,7 @@ export default function Header() {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 p-2"
+              className="text-gray-700 hover:text-blue-600 p-2 rounded-md hover:bg-gray-50 transition-colors"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -90,8 +83,8 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white border-t">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="lg:hidden bg-white border-t shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -106,14 +99,6 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            
-            <Link
-              href="/contact"
-              className="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-blue-700 transition-colors mt-4"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Get Quote
-            </Link>
           </div>
         </div>
       )}
