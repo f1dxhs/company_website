@@ -191,7 +191,7 @@ export default function LargeAngleConveyorPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/products/DJ_series/DJ_series.jpg"
+            src="/images/products/DJ_series/DJ_series_case1.jpg"
             alt="Large Angle Conveyor System Background"
             className="w-full h-full object-cover"
           />
