@@ -33,39 +33,39 @@ export default function ProductsPage() {
 
   const products = [
     {
-      code: "DTII/DTII(A)",
+      code: "DTII_DTII(A)",
       name: "DTII/DTII(A) Belt Conveyor",
-      image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop",
-      slug: "fixed-belt-conveyor"
+      image: "/images/products/dtii_belt_conveyor.jpg",
+      slug: "belt-conveyor"
     },
     {
       code: "Pipe",
       name: "Pipe Belt Conveyor",
-      image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
+      image: "/images/products/pipe_belt_conveyor.jpg",
       slug: "pipe-belt-conveyor"
     },
     {
       code: "DJ Series",
       name: "DJ Series Large-Angle Corrugated Sidewall Belt Conveyor",
-      image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop",
+      image: "/images/products/dj_series.jpg",
       slug: "large-angle-conveyor"
     },
     {
       code: "TDG/THG",
       name: "The TDG and THG Bucket Elevators",
-      image: "https://images.unsplash.com/photo-1581091870622-1c0a0f045e9f?w=800&h=600&fit=crop",
+      image: "/images/products/Bucket_elevator.jpg",
       slug: "bucket-elevator"
     },
     {
       code: "Double Surface",
       name: "Double Work Surface Belt Conveyor",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+      image: "/images/products/double_surface_conveyor.jpg",
       slug: "double-surface-conveyor"
     },
     {
       code: "Overland",
       name: "Long-Distance Overland Belt Conveyor System",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop",
+      image: "/images/products/overland.jpg",
       slug: "overland"
     },
     {
@@ -77,13 +77,13 @@ export default function ProductsPage() {
     {
       code: "CBMEPTS",
       name: "Controlled Bulk Material Transfer System",
-      image: "https://images.unsplash.com/photo-1565186092539-acfeb6e14784?w=800&h=600&fit=crop",
+      image: "/images/products/cbmepts.png",
       slug: "cbmepts"
     },
     {
       code: "Accessories",
-      name: "Other Conveyor Accessories",
-      image: "https://images.unsplash.com/photo-1609557927087-f9d38ae2f32a?w=800&h=600&fit=crop",
+      name: "Conveyor Accessories",
+      image: "/images/products/pulley.png",
       slug: "accessories"
     }
   ]

@@ -1,16 +1,101 @@
 'use client'
 
-'use client'
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
+// Animated counter hook - 必须在组件外部定义
+const useCounter = (end, duration = 2000, started) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    if (!started) return;
+    
+    let startTime = null;
+    const startValue = 0;
+    
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(easeOutQuart * (end - startValue) + startValue);
+      
+      setCount(currentCount);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [end, duration, started]);
+  
+  return count;
+};
+
 export default function AboutPage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [countersStarted, setCountersStarted] = useState(false);
+  const heroRef = useRef(null);
+
+  // Counter values
+  const experience = useCounter(30, 2000, countersStarted);
+  const capacity = useCounter(50000, 2000, countersStarted);
+  const area = useCounter(66000, 2000, countersStarted);
+  const clients = useCounter(800, 2000, countersStarted);
+
+  // 配置化的统计数据
+  const heroStatsConfig = [
+    { 
+      value: experience, 
+      unit: "Years", 
+      label: "Experience",
+      mainTextClass: "text-5xl md:text-6xl font-normal",
+      unitClass: "text-2xl md:text-2xl font-light"
+    },
+    { 
+      value: capacity.toFixed(0), 
+      unit: "Tons", 
+      label: "Capacity",
+      mainTextClass: "text-5xl md:text-6xl font-normal",
+      unitClass: "text-2xl md:text-2xl font-light"
+    },
+    { 
+      value: area.toLocaleString(), 
+      unit: "m²", 
+      label: "Factory Area",
+      mainTextClass: "text-5xl md:text-6xl font-normal",
+      unitClass: "text-2xl md:text-2xl font-light"
+    },
+    { 
+      value: clients, 
+      unit: "+", 
+      label: "Satisfied Clients",
+      mainTextClass: "text-5xl md:text-6xl font-normal",
+      unitClass: "text-2xl md:text-2xl font-light"
+    }
+  ];
 
   useEffect(() => {
     setIsLoaded(true);
+
+    // Intersection Observer for hero counter animation
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !countersStarted) {
+            setCountersStarted(true);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (heroRef.current) {
+      heroObserver.observe(heroRef.current);
+    }
 
     // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
@@ -29,8 +114,11 @@ export default function AboutPage() {
 
     return () => {
       sections.forEach((section) => observer.unobserve(section));
+      if (heroRef.current) {
+        heroObserver.unobserve(heroRef.current);
+      }
     };
-  }, []);
+  }, [countersStarted]);
 
   const timeline = [
     {
@@ -118,15 +206,6 @@ export default function AboutPage() {
           }
         }
 
-        @keyframes lineGrow {
-          from {
-            width: 0;
-          }
-          to {
-            width: 100%;
-          }
-        }
-
         .animate-section {
           opacity: 0;
         }
@@ -151,18 +230,12 @@ export default function AboutPage() {
           animation: scaleIn 0.8s ease-out forwards;
         }
 
-        .animate-section.animate-in .timeline-line {
-          animation: lineGrow 2s ease-out forwards;
-        }
-
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
         .delay-400 { animation-delay: 0.4s; }
         .delay-500 { animation-delay: 0.5s; }
         .delay-600 { animation-delay: 0.6s; }
-        .delay-700 { animation-delay: 0.7s; }
-        .delay-800 { animation-delay: 0.8s; }
 
         .hover-lift {
           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
@@ -173,32 +246,66 @@ export default function AboutPage() {
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
-        .text-shadow-dark {
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        /* Timeline scrollbar styling */
+        .timeline-scroll::-webkit-scrollbar {
+          height: 4px;
+        }
+
+        .timeline-scroll::-webkit-scrollbar-track {
+          background: #e5e7eb;
+          border-radius: 2px;
+        }
+
+        .timeline-scroll::-webkit-scrollbar-thumb {
+          background: #3b82f6;
+          border-radius: 2px;
+        }
+
+        .timeline-scroll::-webkit-scrollbar-thumb:hover {
+          background: #2563eb;
+        }
+
+        /* Timeline item hover effect */
+        .timeline-item {
+          transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+          transform: scale(1.2);
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .timeline-item:hover .timeline-content {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
       `}</style>
 
       <Header />
       
       <div className="pt-16">
-        {/* Hero Section with Company Factory Image */}
-        <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        {/* Hero Section with Animated Counters */}
+        <section ref={heroRef} className="relative h-[70vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
-              src="https://images.unsplash.com/photo-1581091870627-01a0e7b7ce85?w=1920&h=1080&fit=crop&q=80"
+              src='/images/ban_business01.jpg'
               alt="DLM Manufacturing Facility"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900/70"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/80"></div>
           </div>
           
-          <div className={`relative z-10 text-center text-white max-w-4xl mx-auto px-4 ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-shadow-dark fade-up">
-              About DLM Heavy Industry
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto fade-up delay-200">
-              Expert of bulk material transportation - Forge ahead and pursue excellence
-            </p>
+          <div className={`relative z-10 w-full max-w-7xl mx-auto px-4 ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-20 text-white">
+              {heroStatsConfig.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className={stat.mainTextClass + " mb-2"}>
+                    {stat.value} <span className={stat.unitClass}>{stat.unit}</span>
+                  </div>
+                  <p className="text-lg md:text-xl font-light">{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -226,6 +333,7 @@ export default function AboutPage() {
                 <p className="text-gray-600 leading-relaxed text-lg">
                   Today, we operate from our 66,000m² Technology R&D Center and 86,000m² manufacturing base, serving over 800 clients across 76 partner enterprises in 13 provinces and 19 international markets.
                 </p>
+                
               </div>
               
               <div className="relative fade-right">
@@ -242,89 +350,88 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Enhanced Horizontal Timeline */}
-        <section className="relative py-20 animate-section overflow-hidden" style={{
-          background: 'linear-gradient(to bottom, #f9fafb, #ffffff)',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232563eb' fill-opacity='0.03'%3E%3Ccircle cx='50' cy='50' r='1'/%3E%3Ccircle cx='10' cy='10' r='1'/%3E%3Ccircle cx='90' cy='10' r='1'/%3E%3Ccircle cx='90' cy='90' r='1'/%3E%3Ccircle cx='10' cy='90' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '100px 100px'
-        }}>
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center fade-up">Development Journey</h2>
+        {/* Enhanced Timeline Section */}
+        <section className="py-20 bg-gray-900 animate-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl font-bold text-white mb-16 text-center fade-up">Development Journey</h2>
             
+            {/* Horizontal Scrollable Timeline */}
             <div className="relative">
-              {/* Timeline Container */}
-              <div className="relative overflow-x-auto pb-8">
-                <div className="min-w-[1200px] relative">
-                  {/* Main Timeline Line */}
-                  <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-300 transform -translate-y-1/2">
-                    <div className="timeline-line absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-blue-600"></div>
-                  </div>
-
-                  {/* Timeline Items */}
-                  <div className="relative flex justify-between items-center pt-10 pb-10">
-                    {timeline.map((item, index) => (
-                      <div key={index} className={`flex flex-col items-center w-[200px] scale-in ${
-                        index === 0 ? 'delay-100' : 
-                        index === 1 ? 'delay-200' : 
-                        index === 2 ? 'delay-300' : 
-                        index === 3 ? 'delay-400' : 
-                        index === 4 ? 'delay-500' : 
-                        'delay-600'
-                      }`}>
-                        {/* Icon Circle */}
-                        <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300">
-                          <span className="text-3xl">{item.icon}</span>
+              <div className="timeline-scroll overflow-x-auto pb-6">
+                <div className="flex space-x-8 md:space-x-16 min-w-max px-4">
+                  {timeline.map((item, index) => (
+                    <div key={index} className="timeline-item flex flex-col items-center w-64">
+                      {/* Year and Icon */}
+                      <div className="relative">
+                        <div className="timeline-dot w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                          {item.icon}
                         </div>
-                        
-                        {/* Connector Line */}
-                        <div className="w-1 h-8 bg-blue-500"></div>
-                        
-                        {/* Content Card */}
-                        <div className="bg-white rounded-xl shadow-lg p-6 text-center hover-lift w-full">
-                          <h3 className="text-2xl font-bold text-blue-600 mb-2">{item.year}</h3>
-                          <h4 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h4>
-                          <p className="text-sm text-gray-600">{item.description}</p>
-                        </div>
+                        {/* Connecting line */}
+                        {index < timeline.length - 1 && (
+                          <div className="absolute top-10 left-20 w-16 md:w-32 h-0.5 bg-blue-500/30"></div>
+                        )}
                       </div>
-                    ))}
-                  </div>
+                      
+                      {/* Year */}
+                      <div className="mt-4 text-3xl font-bold text-blue-400">
+                        {item.year}
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="timeline-content mt-4 bg-gray-800 rounded-lg p-6 w-full">
+                        <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                        <p className="text-sm text-gray-400">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
+              
+              {/* Scroll Indicator */}
+              <div className="flex justify-center mt-4">
+                <p className="text-gray-500 text-sm flex items-center">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                  </svg>
+                  Scroll to explore more
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Key Statistics with Animation */}
-        <section className="relative py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 animate-section">
-          {/* Background Image */}
-          <div className="absolute inset-0 opacity-20">
-            <img
-              src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&h=800&fit=crop&q=80"
-              alt="Industrial Background"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { value: "30+", label: "Years Experience" },
-                { value: "500+", label: "Employees" },
-                { value: "800+", label: "Satisfied Clients" },
-                { value: "19", label: "Countries Served" }
-              ].map((stat, index) => (
-                <div key={index} className={`text-center scale-in ${
-                  index === 0 ? 'delay-100' : 
-                  index === 1 ? 'delay-200' : 
-                  index === 2 ? 'delay-300' : 
-                  'delay-400'
-                }`}>
-                  <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent mb-3">
-                    {stat.value}
-                  </div>
-                  <p className="text-gray-300 text-lg">{stat.label}</p>
+        {/* Company Values Section */}
+        <section className="py-20 bg-white animate-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center fade-up">Our Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center fade-up delay-100">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-              ))}
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Quality Excellence</h3>
+                <p className="text-gray-600">Committed to delivering the highest quality products and services to our clients worldwide.</p>
+              </div>
+              <div className="text-center fade-up delay-200">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Innovation</h3>
+                <p className="text-gray-600">Continuously advancing technology and solutions to meet evolving industry needs.</p>
+              </div>
+              <div className="text-center fade-up delay-300">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Customer Focus</h3>
+                <p className="text-gray-600">Building lasting partnerships through exceptional service and tailored solutions.</p>
+              </div>
             </div>
           </div>
         </section>

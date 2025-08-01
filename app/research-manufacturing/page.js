@@ -36,19 +36,19 @@ export default function ResearchManufacturingPage() {
     {
       name: "Southwest Jiaotong University",
       description: "Joint research on advanced conveyor belt technologies and material handling systems",
-      logo: "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop",
+      logo: 'images/research/southwest.jpg',
       specialties: ["Belt Conveyor Dynamics", "Material Flow Analysis", "System Optimization"]
     },
     {
       name: "Sichuan University",
       description: "Collaborative development of eco-friendly bulk material handling solutions",
-      logo: "https://images.unsplash.com/photo-1607013407627-6ee814329547?w=400&h=300&fit=crop",
+      logo: "images/research/SCU.jpg",
       specialties: ["Environmental Engineering", "Dust Control Technology", "Energy Efficiency"]
     },
     {
-      name: "University of Electronic Science and Technology",
+      name: "Dalian University of Technology",
       description: "Partnership in intelligent control systems and automation technologies",
-      logo: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+      logo: "images/research/Dalian_U.jpg", 
       specialties: ["Automation Systems", "IoT Integration", "Remote Monitoring"]
     }
   ];
@@ -57,33 +57,34 @@ export default function ResearchManufacturingPage() {
     {
       name: "CNC Machining Centers",
       description: "High-precision 5-axis CNC machines for complex component manufacturing",
-      image: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&h=600&fit=crop"
+      image: "images/research/CNC.jpg"
     },
     {
       name: "Laser Cutting Systems",
       description: "Advanced fiber laser cutting technology for precise metal fabrication",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
+      image: "images/research/laser_cutting.jpg"
     },
     {
       name: "Welding Robots",
       description: "Automated welding systems ensuring consistent quality and efficiency",
-      image: "https://images.unsplash.com/photo-1581091870622-1c0a0f045e9f?w=800&h=600&fit=crop"
+      image: "images/research/welding_robot.jpg"
     },
     {
-      name: "Assembly Lines",
-      description: "Modern assembly facilities with quality control at every stage",
-      image: "https://images.unsplash.com/photo-1565186092539-acfeb6e14784?w=800&h=600&fit=crop"
+      name: "Plating Production Line",
+      description: "Eco-friendly Coating and Plating Production Line",
+      image: "images/research/plating_line.jpg"
     },
     {
       name: "Testing Equipment",
       description: "Comprehensive testing facilities for performance validation",
-      image: "https://images.unsplash.com/photo-1581092160607-ee22c0c8c424?w=800&h=600&fit=crop"
+      image: "images/research/testing_equipment.jpg"
     },
     {
-      name: "Heavy Lifting Equipment",
+      name: "Annealing facility",
       description: "Large-capacity cranes and handling equipment for heavy components",
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&h=600&fit=crop"
-    }
+      image: "images/research/annealing.jpg"
+    },
+
   ];
 
   const certifications = [
@@ -275,12 +276,12 @@ export default function ResearchManufacturingPage() {
                   Excellence in Engineering Innovation
                 </h3>
                 <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                  Our research team consists of over 50 experienced engineers and researchers, including 15 senior engineers and 8 Ph.D. holders. The team specializes in mechanical design, automation control, material science, and environmental engineering.
+                  Our research team consists of over 60 experienced engineers and researchers, including 15 senior engineers and 3 Ph.D. holders. The team specializes in mechanical design, automation control, material science, and environmental engineering.
                 </p>
                 
                 <div className="grid grid-cols-2 gap-6 mb-8">
                   <div className="bg-white rounded-xl p-6 shadow-md">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">50+</div>
+                    <div className="text-3xl font-bold text-blue-600 mb-2">60+</div>
                     <p className="text-gray-600">Research Staff</p>
                   </div>
                   <div className="bg-white rounded-xl p-6 shadow-md">
@@ -288,11 +289,11 @@ export default function ResearchManufacturingPage() {
                     <p className="text-gray-600">Senior Engineers</p>
                   </div>
                   <div className="bg-white rounded-xl p-6 shadow-md">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">8</div>
+                    <div className="text-3xl font-bold text-blue-600 mb-2">3</div>
                     <p className="text-gray-600">Ph.D. Holders</p>
                   </div>
                   <div className="bg-white rounded-xl p-6 shadow-md">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">30+</div>
+                    <div className="text-3xl font-bold text-blue-600 mb-2">100+</div>
                     <p className="text-gray-600">Patents</p>
                   </div>
                 </div>
@@ -320,13 +321,15 @@ export default function ResearchManufacturingPage() {
                 </div>
               </div>
 
-              <div className="relative fade-right">
+            <div className="relative fade-right">
+              <div className="h-[400px] overflow-hidden rounded-2xl shadow-2xl"> {/* 添加容器 */}
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop"
+                  src="images/research_team.jpeg"
                   alt="Research Team"
-                  className="rounded-2xl shadow-2xl"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
+            </div>
             </div>
           </div>
         </section>

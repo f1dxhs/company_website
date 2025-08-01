@@ -7,11 +7,94 @@ import { ChevronDown, Menu, X, ChevronRight, Mail, Phone, MapPin } from 'lucide-
 import Header from './Header'
 import Footer from './Footer'
 
+// Animated counter hook - 必须在组件外部或组件顶层定义
+const useCounter = (end, duration = 2000, started) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    if (!started) return;
+    
+    let startTime = null;
+    const startValue = 0;
+    
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(easeOutQuart * (end - startValue) + startValue);
+      
+      setCount(currentCount);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [end, duration, started]);
+  
+  return count;
+};
+
 export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [aboutCountersStarted, setAboutCountersStarted] = useState(false);
+  const aboutRef = useRef(null);
+  
+  // Counter values - 现在可以正确使用 useCounter 了
+  const yearsCounter = useCounter(30, 2000, aboutCountersStarted);
+  const factoryCounter = useCounter(66000, 2000, aboutCountersStarted);
+  const employeesCounter = useCounter(500, 2000, aboutCountersStarted);
+  const clientsCounter = useCounter(800, 2000, aboutCountersStarted);
+
+  // 配置化的统计数据
+  const statsConfig = [
+    { 
+      value: yearsCounter, 
+      suffix: " +", 
+      label: "Years of Experience", 
+      delay: "delay-100" 
+    },
+    { 
+      value: factoryCounter.toLocaleString(), 
+      suffix: " m²", 
+      label: "Factory Area", 
+      delay: "delay-200" 
+    },
+    { 
+      value: employeesCounter, 
+      suffix: " +", 
+      label: "Employees", 
+      delay: "delay-300" 
+    },
+    { 
+      value: clientsCounter, 
+      suffix: " +", 
+      label: "Satisfied Clients", 
+      delay: "delay-400" 
+    }
+  ];
 
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Intersection Observer for about counter animation
+    const aboutObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !aboutCountersStarted) {
+            setAboutCountersStarted(true);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    
+    if (aboutRef.current) {
+      aboutObserver.observe(aboutRef.current);
+    }
     
     // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
@@ -24,43 +107,46 @@ export default function HomePage() {
       },
       { threshold: 0.1 }
     );
-
+    
     // Observe all sections
     const sections = document.querySelectorAll('.animate-section');
     sections.forEach((section) => observer.observe(section));
 
     return () => {
       sections.forEach((section) => observer.unobserve(section));
+      if (aboutRef.current) {
+        aboutObserver.unobserve(aboutRef.current);
+      }
     };
-  }, []);
+  }, [aboutCountersStarted]);
 
   const featuredProducts = [
     {
-      code: "DT Series",
-      name: "Fixed Belt Conveyor Systems",
+      code: "DTII/DTII(A) Series",
+      name: "Belt Conveyor Systems",
       description: "Universal fixed belt conveyor with advanced design for reliable bulk material transportation.",
-      image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop",
-      slug: "fixed-belt-conveyor"
+      image: "/images/products/dtii_belt_conveyor.jpg",
+      slug: "belt-conveyor"
     },
     {
-      code: "Tubular", 
-      name: "Tubular Belt Conveyor",
+      code: "Pipe", 
+      name: "Pipe Belt Conveyor",
       description: "Environmentally friendly enclosed design for dust-free material transport.",
-      image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
-      slug: "tubular-belt-conveyor"
+      image: "/images/products/pipe_belt_conveyor.jpg",
+      slug: "pipe-belt-conveyor"
     },
     {
-      code: "DJ Series",
-      name: "Large Angle Corrugated Sidewall Conveyor",
-      description: "Steep incline conveying up to 90° for space-saving vertical transport.",
-      image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&h=600&fit=crop",
-      slug: "large-angle-conveyor"
+      code: "Overland and Curved",
+      name: "Overland and horizontal Curved Conveyor",
+      description: "Best solution for long-distance and complex terrain transport.",
+      image: "/images/products/overland.jpg",
+      slug: "overland"
     },
     {
       code: "CBMEPTS",
       name: "Controlled Bulk Material Transfer System",
       description: "Eco-friendly transfer system with minimal dust emission and energy efficiency.",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=600&fit=crop",
+      image: "/images/products/cbmepts.png",
       slug: "cbmepts"
     }
   ]
@@ -217,7 +303,8 @@ export default function HomePage() {
         {/* Static Image Fallback */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1920&h=1080&fit=crop"
+            // src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1920&h=1080&fit=crop"
+            src = '/images/homepage/homepage_1.jpg'
             alt="DLM Heavy Industry Bulk Material Handling Systems"
             className="w-full h-full object-cover"
           />
@@ -294,7 +381,7 @@ export default function HomePage() {
             <div className="relative fade-right">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl hover-lift">
                 <img
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
+                  src="/images/homepage/manufacturing_devices.jpg"
                   alt="DLM Manufacturing Facility"
                   className="w-full transform hover:scale-110 transition-transform duration-500"
                 />
@@ -303,17 +390,15 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Key Statistics with Animation */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "30+", label: "Years of Experience", delay: "delay-100" },
-              { value: "66,000", label: "m² Factory", delay: "delay-200" },
-              { value: "500+", label: "Employees", delay: "delay-300" },
-              { value: "800+", label: "Satisfied Clients", delay: "delay-400" }
-            ].map((stat, index) => (
+          {/* Key Statistics with Animation - 使用配置化的数据 */}
+          <div ref={aboutRef} className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {statsConfig.map((stat, index) => (
               <div key={index} className={`text-center scale-in ${stat.delay}`}>
-                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-2">
-                  {stat.value}
+                <div className="text-5xl font-bold mb-2">
+                  <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+                    {stat.value}
+                  </span>
+                  <span className="text-4xl font-normal text-blue-600 opacity-80">{stat.suffix}</span>
                 </div>
                 <p className="text-gray-600 font-medium">{stat.label}</p>
               </div>
@@ -324,11 +409,20 @@ export default function HomePage() {
 
       {/* Featured Products Section with Subtle Background */}
       <section id="products" className="relative py-24 animate-section bg-gray-100">
+      <div className="absolute inset-0 z-0">
+          <img
+            // src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1920&h=1080&fit=crop"
+            src = '/images/ban_business01.jpg'
+            alt="DLM Heavy Industry Bulk Material Handling Systems"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up">Featured Products</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto mb-6 fade-up delay-100"></div>
-            <p className="text-gray-600 text-xl max-w-3xl mx-auto fade-up delay-200">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 fade-up">Featured Products</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-6 fade-up delay-100"></div>
+            <p className="text-gray-200 text-xl max-w-3xl mx-auto fade-up delay-200">
               Our comprehensive range of bulk material handling equipment meets the diverse needs of various industries.
             </p>
           </div>
@@ -337,7 +431,7 @@ export default function HomePage() {
             {featuredProducts.map((product, index) => (
               <div 
                 key={index} 
-                className={`bg-white rounded-2xl shadow-xl overflow-hidden hover-lift fade-up ${index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : index === 2 ? 'delay-300' : 'delay-400'}`}
+                className={`bg-white/60 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden hover-lift fade-up ${index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : index === 2 ? 'delay-300' : 'delay-400'}`}
               >
                 <div className="relative h-72 overflow-hidden">
                   <img
@@ -519,7 +613,7 @@ export default function HomePage() {
               {
                 title: "Manufacturing Devices",
                 description: "Advanced machinery and equipment for precision manufacturing",
-                image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&h=600&fit=crop",
+                image: "/images/homepage/manufacturing_devices.jpg",
                 link: "/research-manufacturing#manufacturing-devices",
                 icon: "🏭"
               }
