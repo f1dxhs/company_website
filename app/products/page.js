@@ -47,7 +47,7 @@ export default function ProductsPage() {
     {
       code: "DJ Series",
       name: "DJ Series Large-Angle Corrugated Sidewall Belt Conveyor",
-      image: "/images/products/dj_series.jpg",
+      image: "/images/products/DJ_series.jpg",
       slug: "large-angle-conveyor"
     },
     {
