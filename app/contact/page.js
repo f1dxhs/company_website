@@ -56,6 +56,10 @@ export default function ContactPage() {
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email'
     }
+
+    if (!formData.company.trim()) {
+    newErrors.company = 'Company is required'
+    }
     
     if (!formData.subject) {
       newErrors.subject = 'Please select a subject'
@@ -154,9 +158,7 @@ export default function ContactPage() {
                     <Mail className="text-blue-600 mt-1 mr-4 flex-shrink-0" size={24} />
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-                      <p className="text-gray-600">info@dlm-hic.com</p>
-                      <p className="text-gray-600">sales@dlm-hic.com</p>
-                      <p className="text-gray-600">technical@dlm-hic.com</p>
+                      <p className="text-gray-600">f1dxhs625@gmail.com</p>
                     </div>
                   </div>
                   
