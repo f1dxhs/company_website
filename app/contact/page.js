@@ -293,15 +293,15 @@ export default function ContactPage() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Company *</label>
                     <input 
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
-                      placeholder="Your company name"
+                      className={`w-full px-4 py-3 border rounded-lg focus:border-blue-500 focus:outline-none transition-colors ${
+                        errors.company ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.company && (
+                      <p className="mt-1 text-sm text-red-600">{errors.company}</p>
+                    )}
                   </div>
 
                   <div>
