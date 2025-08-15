@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 export default function Footer() {
   const productLinks = [
-    { name: 'Belt Conveyor Systems', href: '/products/fixed-belt-conveyor' },
-    { name: 'Tubular Belt Conveyor', href: '/products/tubular-belt-conveyor' },
+    { name: 'Belt Conveyor Systems', href: '/products/belt-conveyor' },
+    { name: 'Tubular Belt Conveyor', href: '/products/pipe-belt-conveyor' },
     { name: 'Large Angle Conveyor', href: '/products/large-angle-conveyor' },
     { name: 'Bucket Elevator Systems', href: '/products/bucket-elevator' },
   ]
@@ -17,9 +17,9 @@ export default function Footer() {
 
   const companyLinks = [
     { name: 'About Us', href: '/about' },
-    { name: 'Development History', href: '/about#history' },
-    { name: 'Manufacturing Capabilities', href: '/about#capabilities' },
-    { name: 'Quality & Certifications', href: '/about#quality' },
+    { name: 'Development History', href: '/about#development-Journey' },
+    { name: 'Manufacturing Capabilities', href: '/research-manufacturing#manufacturing-devices' },
+    { name: 'Quality & Certifications', href: '/research-manufacturing#quality-assurance' },
   ]
 
   return (
