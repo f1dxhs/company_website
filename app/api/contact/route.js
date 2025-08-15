@@ -1,240 +1,279 @@
-import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
-
-// 初始化 Resend
-const resend = new Resend(process.env.RESEND_API_KEY)
+// app/api/contact/route.js
+import { NextResponse } from 'next/server';
 
 export async function POST(request) {
+  console.log('=== Contact Form Submission Started ===');
+  
   try {
-    const body = await request.json()
+    const body = await request.json();
     
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      company, 
+      phone, 
+      subject, 
+      industry, 
+      message 
+    } = body;
+
     // 验证必填字段
-    const requiredFields = ['firstName', 'lastName', 'email', 'subject', 'message']
-    for (const field of requiredFields) {
-      if (!body[field] || body[field].trim() === '') {
-        return NextResponse.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 }
-        )
-      }
-    }
-    
-    // 验证邮箱格式
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(body.email)) {
+    if (!firstName || !lastName || !email || !subject || !message) {
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Missing required fields' },
         { status: 400 }
-      )
+      );
     }
-    
-    // 创建 HTML 邮件内容
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background-color: #1e40af; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
-          .content { background-color: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; }
-          .field { margin-bottom: 15px; padding: 10px; background-color: white; border-radius: 5px; }
-          .label { font-weight: bold; color: #495057; display: inline-block; width: 120px; }
-          .value { color: #212529; }
-          .message-box { background-color: white; padding: 20px; border-left: 4px solid #1e40af; margin-top: 20px; border-radius: 5px; }
-          .footer { text-align: center; color: #6c757d; font-size: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #dee2e6; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h2>新的询盘信息 | New Contact Form Submission</h2>
+
+    // 检查API密钥
+    if (!process.env.RESEND_API_KEY) {
+      console.error('❌ No API key!');
+      return NextResponse.json(
+        { error: 'Email service not configured' },
+        { status: 500 }
+      );
+    }
+
+    // ⚠️ 关键修复：直接硬编码收件人，不依赖环境变量
+    const ADMIN_EMAIL = 'f1dxhs625@gmail.com';  // 直接硬编码
+    const FROM_EMAIL = 'noreply@donglin-tech.com';  // 直接硬编码
+
+    console.log('📧 Config - Admin:', ADMIN_EMAIL, 'From:', FROM_EMAIL);
+
+    // 管理员邮件内容
+    const adminHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: #1e40af; color: white; padding: 20px; text-align: center;">
+          <h2 style="margin: 0;">新客户询盘 New Inquiry</h2>
+        </div>
+        <div style="padding: 20px; background: #f9fafb; border: 1px solid #e5e7eb;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>姓名 Name:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${firstName} ${lastName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>邮箱 Email:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><a href="mailto:${email}">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>公司 Company:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${company || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>电话 Phone:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${phone || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>主题 Subject:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong style="color: #1e40af;">${subject}</strong></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>行业 Industry:</strong></td>
+              <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${industry || 'N/A'}</td>
+            </tr>
+          </table>
+          <div style="margin-top: 20px; padding: 15px; background: white; border-left: 4px solid #1e40af;">
+            <strong>询盘内容 Message:</strong><br><br>
+            ${message.replace(/\n/g, '<br>')}
           </div>
-          <div class="content">
-            <div class="field">
-              <span class="label">姓名 Name:</span>
-              <span class="value">${body.firstName} ${body.lastName}</span>
-            </div>
-            <div class="field">
-              <span class="label">邮箱 Email:</span>
-              <span class="value"><a href="mailto:${body.email}">${body.email}</a></span>
-            </div>
-            <div class="field">
-              <span class="label">公司 Company:</span>
-              <span class="value">${body.company || '未提供 Not provided'}</span>
-            </div>
-            <div class="field">
-              <span class="label">电话 Phone:</span>
-              <span class="value">${body.phone || '未提供 Not provided'}</span>
-            </div>
-            <div class="field">
-              <span class="label">主题 Subject:</span>
-              <span class="value"><strong>${body.subject}</strong></span>
-            </div>
-            <div class="field">
-              <span class="label">行业 Industry:</span>
-              <span class="value">${body.industry || '未指定 Not specified'}</span>
-            </div>
-            <div class="message-box">
-              <h3>询盘内容 Message:</h3>
-              <p style="white-space: pre-wrap;">${body.message}</p>
-            </div>
-          </div>
-          <div class="footer">
-            <p>提交时间 Submitted at: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}</p>
-            <p>IP地址 IP Address: ${request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'}</p>
+          <div style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 5px;">
+            <strong>⚡ 请尽快回复客户 Please respond promptly!</strong><br>
+            点击邮箱地址可直接回复 | Click email to reply
           </div>
         </div>
-      </body>
-      </html>
-    `
+        <div style="padding: 10px; background: #f3f4f6; text-align: center; font-size: 12px; color: #6b7280;">
+          发送时间 Sent at: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}<br>
+          来自 From: donglin-tech.com
+        </div>
+      </div>
+    `;
+
+    // ========== 第一步：发送管理员通知（最重要！）==========
+    console.log('📮 Sending admin notification...');
     
-    // 发送邮件通知
+    let adminEmailSent = false;
+    let adminEmailError = null;
+    
     try {
-      const { data, error } = await resend.emails.send({
-        from: process.env.FROM_EMAIL || 'DLM Website <onboarding@resend.dev>',
-        to: process.env.NOTIFICATION_EMAIL?.split(',').map(email => email.trim()) || ['your-email@example.com'],
-        subject: `DLM询盘: ${body.subject} - 来自 ${body.firstName} ${body.lastName}`,
-        html: htmlContent,
-        reply_to: body.email, // 回复邮件时会回复给询盘客户
-      })
+      const adminResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [ADMIN_EMAIL],  // ⚠️ 确保是数组！
+          reply_to: email,
+          subject: `[DLM询盘] ${subject} - 来自 ${firstName} ${lastName}`,
+          html: adminHtml,
+          text: `
+新客户询盘 New Inquiry
+
+姓名: ${firstName} ${lastName}
+邮箱: ${email}
+公司: ${company || 'N/A'}
+电话: ${phone || 'N/A'}
+主题: ${subject}
+行业: ${industry || 'N/A'}
+
+询盘内容:
+${message}
+
+发送时间: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}
+          `
+        }),
+      });
+
+      const adminResult = await adminResponse.text();
       
-      if (error) {
-        console.error('Resend error:', error)
-        // 邮件发送失败不影响表单提交成功
+      if (adminResponse.ok) {
+        adminEmailSent = true;
+        console.log('✅ Admin email sent successfully!');
       } else {
-        console.log('✅ Email sent successfully:', data)
+        adminEmailError = adminResult;
+        console.error('❌ Admin email failed:', adminResult);
       }
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError)
-      // 继续处理，不要因为邮件失败而阻止表单提交
+    } catch (error) {
+      adminEmailError = error.message;
+      console.error('❌ Admin email error:', error);
     }
+
+    // ========== 第二步：发送自动回复（可选）==========
+    let autoReplySent = false;
     
-    // 同时保存到本地文件（作为备份）
-    if (process.env.NODE_ENV === 'development' || true) { // 始终保存备份
+    if (process.env.SEND_AUTO_REPLY === 'true' || process.env.SEND_AUTO_REPLY === 'ture') {  // 注意拼写错误兼容
+      console.log('📮 Sending auto-reply...');
+      
       try {
-        const fs = require('fs').promises
-        const path = require('path')
-        
-        const date = new Date()
-        const dateStr = date.toISOString().split('T')[0]
-        const timeStr = date.toTimeString().split(' ')[0].replace(/:/g, '-')
-        const fileName = `${body.firstName}-${body.lastName}-${dateStr}-${timeStr}.json`
-        const dirPath = path.join(process.cwd(), 'contact-submissions', dateStr)
-        const filePath = path.join(dirPath, fileName)
-        
-        // 确保目录存在
-        await fs.mkdir(dirPath, { recursive: true })
-        
-        // 保存表单数据
-        await fs.writeFile(filePath, JSON.stringify({
-          ...body,
-          submittedAt: date.toISOString(),
-          submittedAtLocal: date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }),
-          ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-          userAgent: request.headers.get('user-agent') || 'unknown'
-        }, null, 2))
-        
-        console.log('📁 Backup saved to:', filePath)
-      } catch (fileError) {
-        console.error('File backup failed:', fileError)
-        // 文件保存失败不影响整体流程
+        const autoReplyResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: FROM_EMAIL,
+            to: [email],  // 客户邮箱
+            subject: 'Thank you for contacting DLM Heavy Industry | 感谢您的询盘',
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 30px; text-align: center;">
+                  <h1 style="margin: 0;">Thank You! 感谢您的咨询</h1>
+                </div>
+                <div style="padding: 30px; background: white;">
+                  <p>Dear ${firstName},</p>
+                  <p>Thank you for your inquiry. We will respond within 24 hours.</p>
+                  <p>Best regards,<br>DLM Heavy Industry Team</p>
+                  <hr style="margin: 30px 0;">
+                  <p>尊敬的 ${firstName}，</p>
+                  <p>感谢您的询盘，我们将在24小时内回复您。</p>
+                  <p>此致敬礼，<br>东林重工团队</p>
+                </div>
+              </div>
+            `,
+            text: 'Thank you for your inquiry. We will respond within 24 hours.'
+          }),
+        });
+
+        if (autoReplyResponse.ok) {
+          autoReplySent = true;
+          console.log('✅ Auto-reply sent successfully!');
+        }
+      } catch (error) {
+        console.error('Auto-reply error:', error);
       }
     }
-    
-    // 可选：发送自动回复邮件给客户
-    if (process.env.SEND_AUTO_REPLY === 'true') {
-      try {
-        const autoReplyHtml = `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background-color: #1e40af; color: white; padding: 20px; text-align: center; border-radius: 5px; }
-              .content { padding: 20px; background-color: #f8f9fa; margin-top: 20px; border-radius: 5px; }
-              .footer { text-align: center; color: #6c757d; font-size: 12px; margin-top: 20px; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h2>感谢您的询盘 | Thank You for Your Inquiry</h2>
-              </div>
-              <div class="content">
-                <p>尊敬的 ${body.firstName} ${body.lastName}，</p>
-                <p>Dear ${body.firstName} ${body.lastName},</p>
-                <br>
-                <p>感谢您对DLM重工的关注。我们已收到您的询盘，我们的团队将尽快审阅并回复您。</p>
-                <p>Thank you for your interest in DLM Heavy Industry. We have received your inquiry and our team will review it and respond to you as soon as possible.</p>
-                <br>
-                <p>我们通常在24小时内（工作日）回复。如果您的询盘比较紧急，请直接致电我们。</p>
-                <p>We typically respond within 24 hours during business days. If your inquiry is urgent, please feel free to call us directly.</p>
-                <br>
-                <p>此致<br>Best regards,</p>
-                <p><strong>DLM重工技术团队</strong><br><strong>DLM Heavy Industry Tech Team</strong></p>
-              </div>
-              <div class="footer">
-                <p>这是一封自动回复邮件，请勿直接回复。<br>This is an automated response, please do not reply directly.</p>
-              </div>
-            </div>
-          </body>
-          </html>
-        `
-        
-        await resend.emails.send({
-          from: process.env.FROM_EMAIL || 'DLM <onboarding@resend.dev>',
-          to: body.email,
-          subject: '感谢您的询盘 | Thank you for contacting DLM Heavy Industry',
-          html: autoReplyHtml,
-        })
-        
-        console.log('✅ Auto-reply sent to customer')
-      } catch (autoReplyError) {
-        console.error('Auto-reply failed:', autoReplyError)
-      }
+
+    // ========== 返回结果 ==========
+    // 如果管理员邮件失败，返回错误
+    if (!adminEmailSent) {
+      return NextResponse.json({
+        success: false,
+        error: 'Failed to send notification email',
+        details: {
+          adminEmailError: adminEmailError,
+          autoReplySent: autoReplySent,
+          config: {
+            to: ADMIN_EMAIL,
+            from: FROM_EMAIL
+          }
+        }
+      }, { status: 500 });
     }
-    
-    // 返回成功响应
+
+    // 成功
     return NextResponse.json({
       success: true,
       message: 'Form submitted successfully',
-      // 开发环境返回更多信息用于调试
-      ...(process.env.NODE_ENV === 'development' && { 
-        debug: {
-          emailSent: true,
-          recipient: process.env.NOTIFICATION_EMAIL,
-          timestamp: new Date().toISOString()
-        }
-      })
-    })
-    
+      details: {
+        adminEmailSent: true,
+        autoReplySent: autoReplySent,
+        sentTo: ADMIN_EMAIL
+      }
+    });
+
   } catch (error) {
-    console.error('❌ Contact form error:', error)
-    
+    console.error('💥 Unexpected error:', error);
     return NextResponse.json(
       { 
-        error: 'Failed to process your request. Please try again later.',
-        ...(process.env.NODE_ENV === 'development' && { 
-          details: error.message 
-        })
+        error: 'Server error', 
+        details: error.message 
       },
       { status: 500 }
-    )
+    );
   }
 }
 
-// GET 方法用于测试 API 是否正常工作
+// GET方法用于测试
 export async function GET() {
-  return NextResponse.json({
-    status: 'ok',
-    message: 'Contact API is working',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    emailService: 'Resend',
-    hasApiKey: !!process.env.RESEND_API_KEY,
-    notificationEmail: process.env.NOTIFICATION_EMAIL || 'Not configured',
-    fromEmail: process.env.FROM_EMAIL || 'onboarding@resend.dev'
-  })
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ 
+      error: 'No API key',
+      env: {
+        hasApiKey: false,
+        notification: process.env.NOTIFICATION_EMAIL || 'not set',
+        from: process.env.FROM_EMAIL || 'not set',
+        autoReply: process.env.SEND_AUTO_REPLY || 'not set'
+      }
+    });
+  }
+
+  // 发送测试邮件
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'test@donglin-tech.com',
+        to: ['f1dxhs625@gmail.com'],
+        subject: 'Test from GET endpoint - ' + new Date().toTimeString(),
+        html: '<h1>If you receive this, the system works!</h1>',
+        text: 'Test email'
+      }),
+    });
+
+    const result = await response.text();
+    
+    return NextResponse.json({
+      success: response.ok,
+      message: response.ok ? 
+        '✅ Test email sent to f1dxhs625@gmail.com' : 
+        '❌ Failed to send',
+      result: result,
+      env: {
+        hasApiKey: true,
+        notification: process.env.NOTIFICATION_EMAIL || 'not set',
+        from: process.env.FROM_EMAIL || 'not set',
+        autoReply: process.env.SEND_AUTO_REPLY || 'not set'
+      }
+    });
+  } catch (error) {
+    return NextResponse.json({ error: error.message });
+  }
 }
