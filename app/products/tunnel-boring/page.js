@@ -48,7 +48,7 @@ export default function TunnelConveyorPage() {
     {
       title: 'DLM Extendable Design',
       description: 'Unique telescopic system adapts to tunnel progress',
-      benefits: ['400-800m storage capacity', 'Smooth extension', 'Flexible configuration'],
+      benefits: ['200-1000m storage capacity', 'Smooth extension', 'Flexible configuration'],
       icon: '📐'
     },
     {
@@ -68,25 +68,11 @@ export default function TunnelConveyorPage() {
   // Project case studies
   const projectScenarios = [
     {
-      title: 'Metro Tunnel Project',
-      image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop',
+      title: 'Metro Tunnel in GuangZhou, China',
+      image: '/images/products/tunnel/underground.jpg',
       length: '5.2 km',
       duration: '18 months',
       description: 'Urban subway construction with zero interruption'
-    },
-    {
-      title: 'Mountain Tunnel System',
-      image: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&h=600&fit=crop',
-      length: '8.7 km',
-      duration: '24 months',
-      description: 'High-altitude tunnel boring with continuous muck removal'
-    },
-    {
-      title: 'Water Diversion Tunnel',
-      image: 'https://images.unsplash.com/photo-1628175715904-22d32c596970?w=800&h=600&fit=crop',
-      length: '12.3 km',
-      duration: '36 months',
-      description: 'Large diameter tunnel with high-capacity conveyor system'
     }
   ]
 
@@ -121,7 +107,7 @@ export default function TunnelConveyorPage() {
                 </div>
                 
                 <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                  Tunneling Conveyor Extension Systems
+                  Tunnel Conveyor Extension Systems
                 </h1>
                 
                 <p className="text-xl text-gray-200 mb-8 leading-relaxed">
@@ -458,7 +444,7 @@ export default function TunnelConveyorPage() {
                     <ul className="space-y-3">
                       <li className="flex justify-between">
                         <span className="text-gray-600">Belt Storage Capacity</span>
-                        <span className="font-semibold">400-800m (customizable)</span>
+                        <span className="font-semibold">200-1000m (customizable)</span>
                       </li>
                       <li className="flex justify-between">
                         <span className="text-gray-600">Storage Bin Design</span>

@@ -32,8 +32,8 @@ export default function DTSeriesPage() {
 
   // Key specifications
   const keySpecs = [
-    { label: 'Belt Width', value: '500-2400mm', icon: '📏' },
-    { label: 'Capacity', value: 'Max 10,000 t/h', icon: '⚡' },
+    { label: 'Belt Width', value: '500-3000mm', icon: '📏' },
+    { label: 'Capacity', value: 'Max 15,000 t/h', icon: '⚡' },
     { label: 'Belt Speed', value: '0.8-6.5 m/s', icon: '🚀' },
     { label: 'Distance', value: 'Up to kilometers', icon: '📍' }
   ]
@@ -48,86 +48,188 @@ export default function DTSeriesPage() {
     { name: 'Ports', icon: '🚢' }
   ]
 
-  // Real project scenarios
+  // Real project scenarios - 使用 metrics 数组方式
   const projectScenarios = [
     {
-      title: 'Aggregate Quarry in YangXin, China',
-      // image: 'https://images.unsplash.com/photo-1547234935-80c7145ec969?w=800&h=600&fit=crop',
+      title: 'Lead-Zinc Mine in South Africa',
+      image: '/images/products/belt_conveyor/belt_conveyor_case5.jpg',
+      description: 'Heavy-duty conveyor system for continuous lead and zinc ore transport',
+      metrics: [
+        { label: 'Capacity', value: '3,200 t/h' },
+        { label: 'Length', value: '950 m' },
+        { label: 'Belt Width', value: '1400 mm' }
+      ]
+    },
+    
+    {
+      title: 'Aggregate Quarry System in YangXin, China',
       image: '/images/products/belt_conveyor/belt_conveyor_case1.jpg',
-      capacity: '8,000 t/h',
-      length: '3.2 km',
-      description: 'High-altitude copper mine conveyor system'
+      description: '88 conveyors system Large-scale conveyor network for continuous aggregate transport',
+      // 使用 metrics 数组定义要显示的指标
+      metrics: [
+        { label: 'Capacity', value: '9,000 t/h' },
+        { label: 'Units', value: '88 conveyors' },
+        { label: 'Max Belt Width', value: '2400 mm' }
+      ]
     },
     {
       title: 'Cement Plant in Zizhong, China',
-      // image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
       image: '/images/products/belt_conveyor/belt_conveyor_case2.jpg',
-      capacity: '6,500 t/h',
-      length: '1.8 km',
-      description: 'Automated bulk material handling'
-    },
-    {
-      title: 'Mine in South Africa',
-      image: '/images/products/belt_conveyor/belt_conveyor_case5.jpg',
-      capacity: '3,200 t/h',
-      length: '950 m',
-      description: 'Specialized corrosion-resistant system'
+      description: 'Automated bulk material handling system for cement production',
+      metrics: [
+        { label: 'Capacity', value: '3,000 t/h' },
+        { label: 'Length', value: '1.6 km' },
+        { label: 'Belt Width', value: '1600 mm' }
+      ]
     }
   ]
 
   // Layout types with SVG representations
-  const layouts = [
-    { 
-      type: 'Horizontal',
-      svg: (
-        <svg viewBox="0 0 200 50" className="w-full h-12">
-          <line x1="20" y1="25" x2="180" y2="25" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="20" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    { 
-      type: 'Inclined',
-      svg: (
-        <svg viewBox="0 0 200 50" className="w-full h-12">
-          <line x1="20" y1="35" x2="180" y2="15" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="20" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    { 
-      type: 'Convex Curve',
-      svg: (
-        <svg viewBox="0 0 200 50" className="w-full h-12">
-          <path d="M 20 35 Q 100 5 180 35" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="20" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="35" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    { 
-      type: 'Concave Curve',
-      svg: (
-        <svg viewBox="0 0 200 50" className="w-full h-12">
-          <path d="M 20 15 Q 100 45 180 15" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="20" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="15" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    { 
-      type: 'Combined Curves',
-      svg: (
-        <svg viewBox="0 0 200 50" className="w-full h-12">
-          <path d="M 20 25 Q 60 10 100 25 Q 140 40 180 25" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="20" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="25" r="8" fill="none" stroke="#4B5563" strokeWidth="2"/>
-        </svg>
-      )
-    }
-  ]
+  // Layout types with SVG representations - 简单直线段
+const layouts = [
+  { 
+    type: 'Horizontal',
+    svg: (
+      <svg viewBox="0 0 240 80" className="w-full h-16">
+        {/* 上带面 */}
+        <line x1="40" y1="40" x2="200" y2="40" stroke="#1F2937" strokeWidth="2.5"/>
+        {/* 下带面 */}
+        <line x1="40" y1="50" x2="200" y2="50" stroke="#1F2937" strokeWidth="2.5"/>
+        
+        {/* 左侧滚筒 */}
+        <circle cx="40" cy="45" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="30" y1="45" x2="50" y2="45" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="40" y1="35" x2="40" y2="55" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 右侧滚筒 */}
+        <circle cx="200" cy="45" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="190" y1="45" x2="210" y2="45" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="200" y1="35" x2="200" y2="55" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 支架 */}
+        <line x1="40" y1="55" x2="40" y2="65" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+        <line x1="200" y1="55" x2="200" y2="65" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+      </svg>
+    )
+  },
+  { 
+    type: 'Inclined',
+    svg: (
+      <svg viewBox="0 0 240 80" className="w-full h-16">
+        {/* 上带面 */}
+        <line x1="40" y1="55" x2="200" y2="25" stroke="#1F2937" strokeWidth="2.5"/>
+        {/* 下带面 */}
+        <line x1="40" y1="65" x2="200" y2="35" stroke="#1F2937" strokeWidth="2.5"/>
+        
+        {/* 左侧滚筒 */}
+        <circle cx="40" cy="60" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="30" y1="60" x2="50" y2="60" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="40" y1="50" x2="40" y2="70" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 右侧滚筒 */}
+        <circle cx="200" cy="30" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="190" y1="30" x2="210" y2="30" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="200" y1="20" x2="200" y2="40" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 支架 */}
+        <line x1="40" y1="70" x2="40" y2="75" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+        <line x1="200" y1="40" x2="200" y2="45" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+      </svg>
+    )
+  },
+  { 
+    type: 'Convex',
+    svg: (
+      <svg viewBox="0 0 240 80" className="w-full h-16">
+        {/* 上带面 - 水平段 + 斜向上段 */}
+        <path d="M 40 55 L 130 25 L 200 25" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        {/* 下带面 - 平行 */}
+        <path d="M 40 65 L 130 35 L 200 35" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        
+        {/* R标记 */}
+        <text x="130" y="50" fontSize="10" fill="#6B7280">R</text>
+        
+        {/* 左侧滚筒 */}
+        <circle cx="40" cy="60" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="30" y1="60" x2="50" y2="60" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="40" y1="50" x2="40" y2="70" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 右侧滚筒 */}
+        <circle cx="200" cy="30" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="190" y1="30" x2="210" y2="30" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="200" y1="20" x2="200" y2="40" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 支架 */}
+        <line x1="40" y1="70" x2="40" y2="75" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+        <line x1="200" y1="40" x2="200" y2="45" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+      </svg>
+    )
+  },
+  { 
+    type: 'Concave',
+    svg: (
+      <svg viewBox="0 0 240 80" className="w-full h-16">
+        {/* 上带面 - 水平段 + 斜向上段 */}
+        <path d="M 40 55 L 130 55 L 200 25" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        {/* 下带面 - 平行 */}
+        <path d="M 40 65 L 130 65 L 200 35" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        
+        {/* R标记 */}
+        <text x="130" y="50" fontSize="10" fill="#6B7280">R</text>
+        
+        {/* 左侧滚筒 */}
+        <circle cx="40" cy="60" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="30" y1="60" x2="50" y2="60" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="40" y1="50" x2="40" y2="70" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 右侧滚筒 */}
+        <circle cx="200" cy="30" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="190" y1="30" x2="210" y2="30" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="200" y1="20" x2="200" y2="40" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 支架 */}
+        <line x1="40" y1="70" x2="40" y2="75" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+        <line x1="200" y1="40" x2="200" y2="45" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+      </svg>
+    )
+  },
+  
+  { 
+    type: 'Concave',
+    svg: (
+      <svg viewBox="0 0 240 80" className="w-full h-16">
+        {/* 上带面 - 水平段 + 斜向上段 */}
+        <path d="M 40 55 L 90 55 L 160 25 L 200 25" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        {/* 下带面 - 平行 */}
+        <path d="M 40 65 L 90 65 L 160 35 L 200 35" 
+              fill="none" stroke="#1F2937" strokeWidth="2.5"/>
+        
+        {/* R标记 */}
+        <text x="160" y="50" fontSize="10" fill="#6B7280">R</text>
+        <text x="90" y="40" fontSize="10" fill="#6B7280">R</text>
+        
+        {/* 左侧滚筒 */}
+        <circle cx="40" cy="60" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="30" y1="60" x2="50" y2="60" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="40" y1="50" x2="40" y2="70" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 右侧滚筒 */}
+        <circle cx="200" cy="30" r="10" fill="white" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="190" y1="30" x2="210" y2="30" stroke="#1F2937" strokeWidth="2"/>
+        <line x1="200" y1="20" x2="200" y2="40" stroke="#1F2937" strokeWidth="2"/>
+        
+        {/* 支架 */}
+        <line x1="40" y1="70" x2="40" y2="75" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+        <line x1="200" y1="40" x2="200" y2="45" stroke="#6B7280" strokeWidth="1.5" strokeDasharray="3,3"/>
+      </svg>
+    )
+  },
+]
 
   // Technical parameters table data
   const parameterTable = {
@@ -137,14 +239,14 @@ export default function DTSeriesPage() {
       { angle: 100, width: 500, values: [69, 87, 108, 139, 174, 217, '-', '-', '-', '-', '-', '-'] },
       { angle: 150, width: 650, values: [127, 159, 254, 139, 318, 397, '-', '-', '-', '-', '-', '-'] },
       { angle: 200, width: 800, values: [198, 248, 310, 397, 496, 620, 781, '-', '-', '-', '-', '-'] },
-      { angle: 300, width: 1000, values: [324, 405, 507, 649, 811, 101, 1278, 162, '-', '-', '-', '-'] },
-      { angle: 350, width: 1200, values: ['-', 593, 742, 951, 1188, 148, 1872, 237, 2674, 297, '-', '-'] },
-      { angle: 350, width: 1400, values: ['-', 825, 103, 1321, 165, 206, 2602, 330, 3718, 413, '-', '-'] },
-      { angle: 350, width: 1600, values: ['-', '-', '-', '-', 2186, 273, 3444, 437, 4920, 546, 6122, '-'] },
-      { angle: 350, width: 1800, values: ['-', '-', '-', '-', 2795, 349, 4403, 559, 6291, 698, 7829, 908] },
-      { angle: 350, width: 2000, values: ['-', '-', '-', '-', 3470, 433, 5466, 694, 7808, 867, 9717, 11277] },
-      { angle: 350, width: 2200, values: ['-', '-', '-', '-', '-', '-', 6843, 869, 9776, 10863, 1216, 14120] },
-      { angle: 350, width: 2400, values: ['-', '-', '-', '-', '-', '-', 8289, 1052, 11842, 13158, 1473, 17104] }
+      { angle: 300, width: 1000, values: [324, 405, 507, 649, 811, 1014, 1278, 1622, '-', '-', '-', '-'] },
+      { angle: 350, width: 1200, values: ['-', 593, 742, 951, 1188, 1486, 1872, 2377, 2674, 2971, '-', '-'] },
+      { angle: 350, width: 1400, values: ['-', 825, 1032, 1321, 1652, 2065, 2602, 3304, 3718, 4130, '-', '-'] },
+      { angle: 350, width: 1600, values: ['-', '-', '-', '-', 2186, 2733, 3444, 4373, 4920, 5466, 6122, '-'] },
+      { angle: 350, width: 1800, values: ['-', '-', '-', '-', 2795, 3494, 4403, 5591, 6291, 6989, 7829, 9083] },
+      { angle: 350, width: 2000, values: ['-', '-', '-', '-', 3470, 4338, 5466, 6941, 7808, 8676, 9717, 11277] },
+      { angle: 350, width: 2200, values: ['-', '-', '-', '-', '-', '-', 6843, 8690, 9776, 10863, 12166, 14120] },
+      { angle: 350, width: 2400, values: ['-', '-', '-', '-', '-', '-', 8289, 10526, 11842, 13158, 14737, 17104] }
     ]
   }
 
@@ -157,8 +259,7 @@ export default function DTSeriesPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            // src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop"
-            src = '/images/products/belt_conveyor/belt_conveyor_head.jpg'
+            src='/images/products/belt_conveyor/belt_conveyor_head.jpg'
             alt="Belt Conveyor System Background"
             className="w-full h-full object-cover object-bottom"
           />
@@ -167,50 +268,47 @@ export default function DTSeriesPage() {
 
         {/* Content Overlay */}
         <div className="relative z-10 w-full">
-          {/* Dark overlay for text area */}
-          {/* <div className="bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-transparent"> */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-              <div className="max-w-3xl">
-                <div className="mb-6">
-                  <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    DT II / DT II (A) Series
-                  </span>
-                </div>
-                
-                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                  Belt Conveyor Systems
-                </h1>
-                
-                <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                  Universal fixed belt conveyor based on TD75 and DTII/DTII(A) series, serving as domestically standardized general-purpose product line
-                </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div className="max-w-3xl">
+              <div className="mb-6">
+                <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  DT II / DT II (A) Series
+                </span>
+              </div>
+              
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                Belt Conveyor Systems
+              </h1>
+              
+              <p className="text-xl text-gray-200 mb-8 leading-relaxed">
+                Universal fixed belt conveyor based on TD75 and DTII/DTII(A) series, serving as domestically standardized general-purpose product line
+              </p>
 
-                {/* Key metrics */}
-                <div className="grid grid-cols-2 gap-4 mb-8 max-w-xl">
-                  {keySpecs.slice(0, 2).map((spec, index) => (
-                    <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">{spec.icon}</span>
-                        <span className="text-sm text-gray-300">{spec.label}</span>
-                      </div>
-                      <p className="text-lg font-bold text-white">{spec.value}</p>
+              {/* Key metrics */}
+              <div className="grid grid-cols-2 gap-4 mb-8 max-w-xl">
+                {keySpecs.slice(0, 2).map((spec, index) => (
+                  <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                    <div className="flex items-center mb-2">
+                      <span className="text-2xl mr-3">{spec.icon}</span>
+                      <span className="text-sm text-gray-300">{spec.label}</span>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-lg font-bold text-white">{spec.value}</p>
+                  </div>
+                ))}
+              </div>
 
-                {/* CTA buttons */}
-                <div className="flex flex-wrap gap-4">
-                  <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors group">
-                    Get Quote
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link href="/products" className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition-all duration-300">
-                    View All Products
-                  </Link>
-                </div>
+              {/* CTA buttons */}
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors group">
+                  Get Quote
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/products" className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                  View All Products
+                </Link>
               </div>
             </div>
-          {/* </div> */}
+          </div>
         </div>
 
         {/* Scroll indicator */}
@@ -240,7 +338,7 @@ export default function DTSeriesPage() {
         </div>
       </section>
 
-      {/* New Project Showcase Section */}
+      {/* New Project Showcase Section - 使用 metrics 数组渲染 */}
       <section className="py-24 bg-white animate-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
@@ -258,13 +356,14 @@ export default function DTSeriesPage() {
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                   <h3 className="text-3xl font-bold mb-4">{projectScenarios[activeScenario].title}</h3>
                   <p className="text-lg mb-4">{projectScenarios[activeScenario].description}</p>
-                  <div className="flex gap-8">
-                    <div>
-                      <span className="text-orange-400 font-bold">Capacity:</span> {projectScenarios[activeScenario].capacity}
-                    </div>
-                    <div>
-                      <span className="text-orange-400 font-bold">Length:</span> {projectScenarios[activeScenario].length}
-                    </div>
+                  
+                  {/* 使用 metrics 数组动态渲染指标 */}
+                  <div className="flex flex-wrap gap-6">
+                    {projectScenarios[activeScenario].metrics.map((metric, index) => (
+                      <div key={index}>
+                        <span className="text-orange-400 font-bold">{metric.label}:</span> {metric.value}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

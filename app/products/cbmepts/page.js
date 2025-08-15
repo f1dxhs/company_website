@@ -121,8 +121,8 @@ export default function CBMEPTSPage() {
   // Real project scenarios
   const projectScenarios = [
     {
-      title: 'Coal Mine Transfer Point in Australia',
-      image: '/images/products/cbmepts/project1.jpg', // 修改这里的图片路径
+      title: 'Coal Mine Transfer Point in Xinjiang, China',
+      image: '/images/products/cbmepts/cbmepts.png', // 修改这里的图片路径
       capacity: '5,000 t/h',
       dustReduction: '95%',
       description: 'Complete dust control system for coal transfer'

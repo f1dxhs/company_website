@@ -89,17 +89,17 @@ export default function ResearchManufacturingPage() {
 
   const certifications = [
     {
-      name: "ISO 9001:2015",
+      name: "ISO 9001:2004",
       description: "Quality Management System Certification",
       icon: "✅"
     },
     {
-      name: "ISO 14001:2015",
+      name: "ISO 14001:2006",
       description: "Environmental Management System Certification",
       icon: "🌿"
     },
     {
-      name: "ISO 45001:2018",
+      name: "ISO 45001:2008",
       description: "Occupational Health and Safety Management System",
       icon: "🛡️"
     },

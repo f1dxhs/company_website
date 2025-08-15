@@ -71,7 +71,7 @@ export default function ProductsPage() {
     {
       code: "Tunnel",
       name: "Tunnel Boring Continuous Conveyor System",
-      image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop",
+      image: "/images/products/underground.jpg",
       slug: "tunnel-boring"
     },
     {
@@ -153,7 +153,8 @@ export default function ProductsPage() {
         <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
-              src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&h=800&fit=crop&q=80"
+              // src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&h=800&fit=crop&q=80"
+              src = '/images/pipe_1.jpg'
               alt="DLM Products"
               className="w-full h-full object-cover"
             />

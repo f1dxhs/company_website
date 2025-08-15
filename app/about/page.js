@@ -331,7 +331,7 @@ export default function AboutPage() {
                   DLM specializes in bulk material handling, combining design, R&D, and manufacturing. We deliver reliable transport solutions across industries with durable installations, sustainable modules, and efficient service. Our innovative approach accelerates validation, cutting early-stage costs and maximizing ROI.
                 </p>
                 <p className="text-gray-600 leading-relaxed text-lg">
-                  Today, we operate from our 66,000m² Technology R&D Center and 86,000m² manufacturing base, serving over 800 clients across 76 partner enterprises in 13 provinces and 19 international markets.
+                  Today, we operate from our 66,000m² Technology R&D Center and manufacturing base, serving over 800 clients across 76 partner enterprises in 13 provinces and 19 international markets.
                 </p>
                 
               </div>
@@ -339,7 +339,8 @@ export default function AboutPage() {
               <div className="relative fade-right">
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl hover-lift">
                   <img
-                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80"
+                    // src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80"
+                    src = '/images/homepage_1.jpg'
                     alt="DLM Headquarters and Manufacturing Facility"
                     className="w-full h-[500px] object-cover"
                   />

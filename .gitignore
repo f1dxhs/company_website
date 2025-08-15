@@ -30,8 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files - 重要！不要提交环境变量文件
+.env
+.env.local
+.env.production
+.env.production.local
+.env.development.local
+.env.test.local
 
 # vercel
 .vercel
@@ -39,3 +44,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# 联系表单提交的备份文件
+/contact-submissions/
+/submissions/

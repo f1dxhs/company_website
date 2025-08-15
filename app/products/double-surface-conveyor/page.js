@@ -50,13 +50,22 @@ export default function DoubleBeltConveyorPage() {
   // Real project scenarios
   const projectScenarios = [
     {
+      title:'Coal Mine in Malaysia',
+      image: '/images/products/double_surface/double_surface_2.jpg',
+      capacity: '1200t/h',
+      length: '3000m',
+      description: 'High-capacity dual-belt system for coal transport'
+    },
+    {
       title: 'Coal Mine in Yunan, China',
       image: '/images/products/double_surface/double_surface_conveyor.jpg',
-      capacity: 'Double capacity',
-      length: 'No tunnel changes',
+      capacity: '1000t/h',
+      length: '2400m',
       description: 'Simultaneous coal and gangue transport'
     }
+
   ]
+
 
   // Layout types with SVG representations
   const layouts = [

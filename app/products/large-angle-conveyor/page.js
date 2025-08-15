@@ -77,7 +77,7 @@ export default function LargeAngleConveyorPage() {
       title: 'Metro Tunnel in Guangdong, China',
       // image: 'https://images.unsplash.com/photo-1547751550-b62e1c2e4355?w=800&h=600&fit=crop',
       image: '/images/products/DJ_series/DJ_series_case1.jpg',
-      capacity: '1,200 m³/h',
+      capacity: '1,000 m³/h',
       angle: '90°',
       description: 'Vertical lift system for construction stone extraction'
     }
@@ -90,9 +90,7 @@ export default function LargeAngleConveyorPage() {
       description: 'Single angle change',
       svg: (
         <svg viewBox="0 0 200 100" className="w-full h-20">
-          <line x1="20" y1="80" x2="80" y2="80" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="80" y1="80" x2="120" y2="20" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="120" y1="20" x2="180" y2="20" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="20" y1="80" x2="180" y2="20" stroke="#4B5563" strokeWidth="3"/>
           <circle cx="20" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
           <circle cx="180" cy="20" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
         </svg>
@@ -103,37 +101,35 @@ export default function LargeAngleConveyorPage() {
       description: 'Right angle configuration',
       svg: (
         <svg viewBox="0 0 200 100" className="w-full h-20">
-          <line x1="20" y1="80" x2="100" y2="80" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="100" y1="80" x2="100" y2="20" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="20" y1="80" x2="120" y2="80" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="120" y1="80" x2="180" y2="20" stroke="#4B5563" strokeWidth="3"/>
           <circle cx="20" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="100" cy="20" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="20" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
         </svg>
       )
     },
     { 
-      type: 'N-Type',
+      type: 'NL-Type',
       description: 'Multiple angle changes',
       svg: (
         <svg viewBox="0 0 200 100" className="w-full h-20">
-          <line x1="20" y1="80" x2="60" y2="80" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="60" y1="80" x2="100" y2="20" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="100" y1="20" x2="140" y2="20" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="140" y1="20" x2="180" y2="80" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="20" y1="80" x2="100" y2="30" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="100" y1="30" x2="180" y2="30" stroke="#4B5563" strokeWidth="3"/>
           <circle cx="20" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="30" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
         </svg>
       )
     },
     { 
-      type: 'Combined Curves',
+      type: 'S-Type',
       description: 'Complex routing with curves',
       svg: (
         <svg viewBox="0 0 200 100" className="w-full h-20">
-          <path d="M 20 80 L 60 80 Q 100 80 100 40 L 100 20" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <line x1="100" y1="20" x2="140" y2="20" stroke="#4B5563" strokeWidth="3"/>
-          <path d="M 140 20 Q 180 20 180 60 L 180 80" fill="none" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="20" y1="80" x2="60" y2="80" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="60" y1="80" x2="140" y2="30" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="140" y1="30" x2="180" y2="30" stroke="#4B5563" strokeWidth="3"/>
           <circle cx="20" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="180" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="30" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
         </svg>
       )
     },
@@ -142,10 +138,11 @@ export default function LargeAngleConveyorPage() {
       description: 'Pure vertical lifting',
       svg: (
         <svg viewBox="0 0 200 100" className="w-full h-20">
-          <path d="M 100 80 Q 90 80 90 70 L 90 30 Q 90 20 100 20" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <path d="M 100 80 Q 110 80 110 70 L 110 30 Q 110 20 100 20" fill="none" stroke="#4B5563" strokeWidth="3"/>
-          <circle cx="100" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
-          <circle cx="100" cy="20" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <line x1="20" y1="80" x2="100" y2="80" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="100" y1="80" x2="100" y2="20" stroke="#4B5563" strokeWidth="3"/>
+          <line x1="100" y1="20" x2="180" y2="20" stroke="#4B5563" strokeWidth="3"/>
+          <circle cx="20" cy="80" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
+          <circle cx="180" cy="20" r="6" fill="none" stroke="#4B5563" strokeWidth="2"/>
         </svg>
       )
     }

@@ -71,31 +71,39 @@ export default function PipeBeltConveyorPage() {
     }
   ]
 
-  // Real project scenarios
+  // Real project scenarios - 使用 metrics 数组方式
   const projectScenarios = [
     {
       title: 'Power Station in Chongqing, China',
-      // image: 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?w=800&h=600&fit=crop',
       image: '/images/products/pipe/pipe_case1.jpg',
-      capacity: '2,800 t/h',
-      length: '1.5 km',
-      description: 'Enclosed limestone transport system with dust control'
+      description: 'Quiet, eco-friendly urban pipe conveyor system.',
+      // 使用 metrics 数组定义要显示的指标
+      metrics: [
+        { label: 'Capacity', value: '2,400 t/h' },
+        { label: 'Length', value: '1.5 km' },
+        { label: 'Pipe Diameter', value: '500 mm' },  // 可以添加更多指标
+      ]
     },
     {
       title: 'Salt Lake Lithium in Golmud, China',
-      // image: 'https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=800&h=600&fit=crop',
       image: '/images/products/pipe/pipe_case2.jpg',
-      capacity: '4,200 t/h',
-      length: '16 km',
-      description: 'Environmental-friendly coal handling system'
+      description: 'High-altitude, corrosion-resistant salt lake pipe conveyor system.',
+      metrics: [
+        { label: 'Capacity', value: '500 t/h' },
+        { label: 'Length', value: '16 km' },
+        { label: 'Pipe Diameter', value: '250mm' }
+      ]
     },
     {
       title: 'Power Station in Sichuan, China',
-      // image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&h=600&fit=crop',
       image: '/images/products/pipe/pipe_case3.jpg',
-      capacity: '3,500 t/h',
-      length: '1.8 km',
-      description: 'Cold weather resistant enclosed conveyor system'
+      description: 'High-incline, all-weather mountainous pipe conveyor system.',
+      metrics: [
+        { label: 'Capacity', value: '2,500 t/h' },
+        { label: 'unit', value: '34 conveyors' },
+        { label: 'Pipe Diameter', value: '600mm' }
+
+      ]
     }
   ]
 
@@ -135,8 +143,7 @@ export default function PipeBeltConveyorPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img
-            // src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1920&h=1080&fit=crop"
-            src = '/images/products/pipe/pipe_head.jpg'
+            src='/images/products/pipe/pipe_head.jpg'
             alt="Pipe Belt Conveyor System Background"
             className="w-full h-full object-cover"
           />
@@ -145,50 +152,47 @@ export default function PipeBeltConveyorPage() {
 
         {/* Content Overlay */}
         <div className="relative z-10 w-full">
-          {/* Dark overlay for text area */}
-          {/* <div className="bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-transparent"> */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-              <div className="max-w-3xl">
-                <div className="mb-6">
-                  <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    Tubular Belt Conveyor
-                  </span>
-                </div>
-                
-                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                  Pipe Belt Conveyor Systems
-                </h1>
-                
-                <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                  Advanced enclosed belt conveyor system designed to overcome limitations of traditional conveyors. Ideal for environmentally sensitive applications and complex routing requirements.
-                </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div className="max-w-3xl">
+              <div className="mb-6">
+                <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Tubular Belt Conveyor
+                </span>
+              </div>
+              
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                Pipe Belt Conveyor Systems
+              </h1>
+              
+              <p className="text-xl text-gray-200 mb-8 leading-relaxed">
+                Advanced enclosed belt conveyor system designed to overcome limitations of traditional conveyors. Ideal for environmentally sensitive applications and complex routing requirements.
+              </p>
 
-                {/* Key metrics */}
-                <div className="grid grid-cols-2 gap-4 mb-8 max-w-xl">
-                  {keySpecs.slice(0, 2).map((spec, index) => (
-                    <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">{spec.icon}</span>
-                        <span className="text-sm text-gray-300">{spec.label}</span>
-                      </div>
-                      <p className="text-lg font-bold text-white">{spec.value}</p>
+              {/* Key metrics */}
+              <div className="grid grid-cols-2 gap-4 mb-8 max-w-xl">
+                {keySpecs.slice(0, 2).map((spec, index) => (
+                  <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                    <div className="flex items-center mb-2">
+                      <span className="text-2xl mr-3">{spec.icon}</span>
+                      <span className="text-sm text-gray-300">{spec.label}</span>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-lg font-bold text-white">{spec.value}</p>
+                  </div>
+                ))}
+              </div>
 
-                {/* CTA buttons */}
-                <div className="flex flex-wrap gap-4">
-                  <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors group">
-                    Get Quote
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link href="/products" className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition-all duration-300">
-                    View All Products
-                  </Link>
-                </div>
+              {/* CTA buttons */}
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors group">
+                  Get Quote
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/products" className="inline-flex items-center border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                  View All Products
+                </Link>
               </div>
             </div>
-          {/* </div> */}
+          </div>
         </div>
 
         {/* Scroll indicator */}
@@ -230,7 +234,7 @@ export default function PipeBeltConveyorPage() {
         </div>
       </section>
 
-      {/* Real-World Applications Section */}
+      {/* Real-World Applications Section - 使用 metrics 数组渲染 */}
       <section className="py-24 bg-white animate-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
@@ -248,13 +252,14 @@ export default function PipeBeltConveyorPage() {
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                   <h3 className="text-3xl font-bold mb-4">{projectScenarios[activeScenario].title}</h3>
                   <p className="text-lg mb-4">{projectScenarios[activeScenario].description}</p>
-                  <div className="flex gap-8">
-                    <div>
-                      <span className="text-orange-400 font-bold">Capacity:</span> {projectScenarios[activeScenario].capacity}
-                    </div>
-                    <div>
-                      <span className="text-orange-400 font-bold">Length:</span> {projectScenarios[activeScenario].length}
-                    </div>
+                  
+                  {/* 使用 metrics 数组动态渲染指标 */}
+                  <div className="flex flex-wrap gap-x-8 gap-y-3">
+                    {projectScenarios[activeScenario].metrics.map((metric, index) => (
+                      <div key={index}>
+                        <span className="text-orange-400 font-bold">{metric.label}:</span> {metric.value}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

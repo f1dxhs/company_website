@@ -77,7 +77,7 @@ export default function BucketElevatorsPage() {
       title: 'Cement Plant in Thailand',
       image: '/images/products/TDG_THG/Bucket_elevator.jpg',
       capacity: '1,200 m³/h',
-      height: '65m',
+      height: '18m',
       description: 'High-capacity clinker handling system'
     }
   ]

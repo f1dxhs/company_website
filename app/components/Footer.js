@@ -2,18 +2,18 @@ import Link from 'next/link'
 
 export default function Footer() {
   const productLinks = [
-    { name: 'Fixed Belt Conveyor Systems', href: '/products/fixed-belt-conveyor' },
+    { name: 'Belt Conveyor Systems', href: '/products/fixed-belt-conveyor' },
     { name: 'Tubular Belt Conveyor', href: '/products/tubular-belt-conveyor' },
     { name: 'Large Angle Conveyor', href: '/products/large-angle-conveyor' },
     { name: 'Bucket Elevator Systems', href: '/products/bucket-elevator' },
   ]
 
-  const solutionLinks = [
-    { name: 'Mining & Minerals', href: '/solutions/mining' },
-    { name: 'Ports & Terminals', href: '/solutions/ports' },
-    { name: 'Power Generation', href: '/solutions/power' },
-    { name: 'Cement & Building Materials', href: '/solutions/cement' },
-  ]
+  // const solutionLinks = [
+  //   { name: 'Mining & Minerals', href: '/solutions/mining' },
+  //   { name: 'Ports & Terminals', href: '/solutions/ports' },
+  //   { name: 'Power Generation', href: '/solutions/power' },
+  //   { name: 'Cement & Building Materials', href: '/solutions/cement' },
+  // ]
 
   const companyLinks = [
     { name: 'About Us', href: '/about' },
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
 
           {/* Solutions */}
-          <div>
+          {/* <div>
             <h4 className="font-semibold text-lg mb-4">Solutions</h4>
             <ul className="space-y-2">
               {solutionLinks.map((link) => (
@@ -87,7 +87,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Company */}
           <div>
@@ -106,7 +106,7 @@ export default function Footer() {
               <h5 className="font-semibold mb-2">Contact Info</h5>
               <div className="text-gray-400 text-sm space-y-1">
                 <p>📧 info@dlm-hic.com</p>
-                <p>📞 +86 28 XXXX XXXX</p>
+                <p>📞 +86 136 0825 6917</p>
                 <p>📍 Sichuan, China</p>
               </div>
             </div>

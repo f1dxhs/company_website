@@ -90,11 +90,11 @@ export default function AccessoriesPage() {
 
   // Gallery images
   const galleryImages = [
-    { id: 1, src: '/images/products/accessories/1.jpg', caption: 'Roller' },
+    { id: 1, src: '/images/products/accessories/1.jpg', caption: 'Idler' },
     { id: 2, src: '/images/products/accessories/2.jpg', caption: 'Heavy-duty Pulley' },
     { id: 3, src: '/images/products/accessories/3.jpg', caption: 'Pulley and Frame' },
     { id: 4, src: '/images/products/accessories/4.jpg', caption: 'Bend Pulley' },
-    { id: 5, src: '/images/products/accessories/7.jpg', caption: 'Galvanized Roller' },
+    { id: 5, src: '/images/products/accessories/7.jpg', caption: 'Galvanized Idler' },
     { id: 6, src: '/images/products/accessories/8.jpg', caption: 'Ceramic Pulley' },
   ]
 
@@ -121,7 +121,7 @@ export default function AccessoriesPage() {
   const faqData = [
     {
       question: 'What materials are available?',
-      answer: 'We offer rollers and idlers in Steel Q235, Stainless Steel 304/316, and specialized polymer materials for specific applications.'
+      answer: 'We offer Pulley and idlers in Steel Q235, Stainless Steel 304/316, and specialized polymer materials for specific applications.'
     },
     {
       question: 'What is the minimum order quantity?',
@@ -171,7 +171,7 @@ export default function AccessoriesPage() {
               Accessories for Belt Conveyors
             </h1>
             <p className="text-xl text-gray-200 mb-8">
-              High-durability Rollers & Idlers in Multiple Sizes
+              High-durability Pulleys & Idlers in Multiple Sizes
             </p>
             <div className="flex gap-4">
               <button
@@ -182,7 +182,7 @@ export default function AccessoriesPage() {
                     : 'bg-white/20 text-white hover:bg-white/30'
                 }`}
               >
-                <span className="text-2xl mr-2">⚙️</span> Rollers
+                <span className="text-2xl mr-2">⚙️</span> Pulleys
               </button>
               <button
                 onClick={() => setActiveTab('idlers')}
@@ -205,7 +205,7 @@ export default function AccessoriesPage() {
           {/* Table Controls */}
           <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h2 className="text-3xl font-bold text-gray-900">
-              {activeTab === 'rollers' ? 'Roller Specifications' : 'Idler Specifications'}
+              {activeTab === 'rollers' ? 'Pulleys Simple Specifications' : 'Idler Simple Specifications'}
             </h2>
             <div className="flex gap-3">
               <button

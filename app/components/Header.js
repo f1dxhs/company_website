@@ -22,7 +22,7 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Products', href: '/products' },
-    { name: 'Solutions', href: '/solutions' },
+    // { name: 'Solutions', href: '/solutions' },
     { name: 'Capabilities', href: '/research-manufacturing' },
     { name: 'Contact', href: '/contact' },
   ]

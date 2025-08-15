@@ -43,24 +43,24 @@ export default function LongDistanceConveyorPage() {
 
   const projectScenarios = [
     {
-      title: 'Sand Mine in Kyrgyzstan',
+      title: 'Huaxin Cement Plant in Kyrgyzstan',
       image: '/images/products/belt_conveyor/belt_conveyor_case4.jpg',
-      capacity: '3,200 t/h',
-      length: '9800 m',
+      capacity: '1,200 t/h',
+      length: '9.8 km',
       description: 'Specialized corrosion-resistant system'
     },
     {
-      title: 'xxx in inner mongolia',
+      title: 'Coal Power in inner mongolia',
       image: '/images/products/overland_curved/overland_case1.jpg',
-      capacity: '5,000 t/h',
-      length: '8.5 km',
+      capacity: '2,000 t/h',
+      length: '5.5 km',
       description: 'Efficient material transport from port to processing facility'
     },
     {
-      title: '双江口水电站',
+      title: '察雅水电站',
       image: '/images/products/overland_curved/overland_case2.jpg',
-      capacity: '3,600 t/h',
-      length: '15 km',
+      capacity: '1,800 t/h',
+      length: '3.2 km',
       description: 'Following natural terrain with curved sections'
     }
   ]
@@ -208,8 +208,8 @@ export default function LongDistanceConveyorPage() {
             <div className="grid md:grid-cols-2 gap-12">
               {/* Belt Conveyor Side */}
               <div className="relative">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-4">
+                <div className="text-center mb-8 h-[160px] flex flex-col justify-center">
+                  <div className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-4 mx-auto">
                     <span className="text-5xl">🏗️</span>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900">Belt Conveyor</h3>
@@ -218,29 +218,46 @@ export default function LongDistanceConveyorPage() {
                 
                 <div className="space-y-6">
                   {/* Construction Cost */}
-                  <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200">
-                    <p className="text-sm text-gray-600 mb-2">Construction Cost</p>
-                    <div className="flex items-end gap-2">
-                      <span className="text-4xl font-bold text-green-600">0.183</span>
-                      <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                  <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 h-[180px] flex flex-col justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-2">Construction Cost</p>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold text-gray-600">1</span>
+                        <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                      </div>
                     </div>
-                    <div className="mt-3 bg-green-200 h-2 rounded-full">
-                      <div className="bg-green-600 h-2 rounded-full" style={{ width: '9.6%' }}></div>
+                    <div>
+                      <div className="bg-gray-200 h-2 rounded-full">
+                        <div className="bg-gray-600 h-2 rounded-full" style={{ width: '100%' }}></div>
+                      </div>
+                      <div className="mt-2 h-5 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-sm text-gray-500">Higher initial investment</span>
+                      </div>
                     </div>
                   </div>
                   
                   {/* Operating Cost */}
-                  <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200">
-                    <p className="text-sm text-gray-600 mb-2">Operating Cost</p>
-                    <div className="flex items-end gap-2">
-                      <span className="text-4xl font-bold text-green-600">0.69</span>
-                      <span className="text-lg text-gray-600 mb-1">¥/ton</span>
+                  <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200 h-[180px] flex flex-col justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-2">Operating Cost</p>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold text-green-600">0.183</span>
+                        <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                      </div>
                     </div>
-                    <div className="mt-2 flex items-center gap-2">
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className="text-sm text-green-700">Most cost-effective</span>
+                    <div>
+                      <div className="bg-green-200 h-2 rounded-full">
+                        <div className="bg-green-600 h-2 rounded-full" style={{ width: '9.6%' }}></div>
+                      </div>
+                      <div className="mt-2 h-5 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm text-green-700">Most cost-effective</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -248,8 +265,8 @@ export default function LongDistanceConveyorPage() {
 
               {/* Truck Transport Side */}
               <div className="relative">
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-4">
+                <div className="text-center mb-8 h-[160px] flex flex-col justify-center">
+                  <div className="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-4 mx-auto">
                     <span className="text-5xl">🚚</span>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900">Truck Transport</h3>
@@ -258,29 +275,46 @@ export default function LongDistanceConveyorPage() {
                 
                 <div className="space-y-6">
                   {/* Construction Cost */}
-                  <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-                    <p className="text-sm text-gray-600 mb-2">Construction Cost</p>
-                    <div className="flex items-end gap-2">
-                      <span className="text-4xl font-bold text-gray-600">1.913</span>
-                      <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                  <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200 h-[180px] flex flex-col justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-2">Construction Cost</p>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold text-green-600">0.69</span>
+                        <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                      </div>
                     </div>
-                    <div className="mt-3 bg-gray-200 h-2 rounded-full">
-                      <div className="bg-gray-600 h-2 rounded-full" style={{ width: '100%' }}></div>
+                    <div>
+                      <div className="bg-green-200 h-2 rounded-full">
+                        <div className="bg-green-600 h-2 rounded-full" style={{ width: '69%' }}></div>
+                      </div>
+                      <div className="mt-2 h-5 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm text-green-700">Lower initial investment</span>
+                      </div>
                     </div>
                   </div>
                   
                   {/* Operating Cost */}
-                  <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-                    <p className="text-sm text-gray-600 mb-2">Operating Cost</p>
-                    <div className="flex items-end gap-2">
-                      <span className="text-4xl font-bold text-gray-600">5.7</span>
-                      <span className="text-lg text-gray-600 mb-1">¥/ton</span>
+                  <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200 h-[180px] flex flex-col justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-2">Operating Cost</p>
+                      <div className="flex items-end gap-2">
+                        <span className="text-4xl font-bold text-gray-600">1.913</span>
+                        <span className="text-lg text-gray-600 mb-1">Billion ¥</span>
+                      </div>
                     </div>
-                    <div className="mt-2 flex items-center gap-2">
-                      <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                      <span className="text-sm text-red-600">8.3x more expensive</span>
+                    <div>
+                      <div className="bg-gray-200 h-2 rounded-full">
+                        <div className="bg-gray-600 h-2 rounded-full" style={{ width: '100%' }}></div>
+                      </div>
+                      <div className="mt-2 h-5 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span className="text-sm text-red-600">10.5x more expensive</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -302,23 +336,23 @@ export default function LongDistanceConveyorPage() {
                 <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                   <span className="text-2xl">⚡</span>
                 </div>
-                <h4 className="text-lg font-semibold">Operating Energy</h4>
+                <h4 className="text-lg font-semibold">Fugitive Dust</h4>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">0.257 kg</span>
+                  <span className="text-sm text-green-600">Belt Conveyor</span>
+                  <span className="font-bold text-green-600">6.96×10⁴ kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-green-500" style={{ width: '16.2%' }}></div>
+                  <div className="absolute h-full bg-green-500" style={{ width: '0.63%' }}></div>
                   <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">1.586 kg</span>
+                  <span className="font-bold text-gray-600">1.1×10⁷ kg</span>
                 </div>
                 <div className="text-center">
-                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-84% reduction</span>
+                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.4% reduction</span>
                 </div>
               </div>
             </div>
@@ -332,19 +366,19 @@ export default function LongDistanceConveyorPage() {
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">0.00696 kg</span>
+                  <span className="text-sm text-green-600">Belt Conveyor</span>
+                  <span className="font-bold text-green-600">1.48×10³ kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-green-500" style={{ width: '0.6%' }}></div>
+                  <div className="absolute h-full bg-green-500" style={{ width: '0.41%' }}></div>
                   <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">1.1 kg</span>
+                  <span className="font-bold text-gray-600">3.6×10⁵ kg</span>
                 </div>
                 <div className="text-center">
-                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.4% reduction</span>
+                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.6% reduction</span>
                 </div>
               </div>
             </div>
@@ -358,19 +392,19 @@ export default function LongDistanceConveyorPage() {
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">0.000375 kg</span>
+                  <span className="text-sm text-green-600">Belt Conveyor</span>
+                  <span className="font-bold text-green-600">3.75×10² kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-green-500" style={{ width: '0.02%' }}></div>
+                  <div className="absolute h-full bg-green-500" style={{ width: '0.17%' }}></div>
                   <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">2.16 kg</span>
+                  <span className="font-bold text-gray-600">2.16×10⁵ kg</span>
                 </div>
                 <div className="text-center">
-                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.98% reduction</span>
+                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.8% reduction</span>
                 </div>
               </div>
             </div>
@@ -384,16 +418,16 @@ export default function LongDistanceConveyorPage() {
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">0.00148 kg</span>
+                  <span className="text-sm text-green-600">Belt Conveyor</span>
+                  <span className="font-bold text-green-600">1.48×10² kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-green-500" style={{ width: '0.4%' }}></div>
+                  <div className="absolute h-full bg-green-500" style={{ width: '0.41%' }}></div>
                   <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">0.36 kg</span>
+                  <span className="font-bold text-gray-600">3.6×10⁴ kg</span>
                 </div>
                 <div className="text-center">
                   <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.6% reduction</span>
@@ -403,23 +437,23 @@ export default function LongDistanceConveyorPage() {
 
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <span className="text-2xl">🌍</span>
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <span className="text-2xl">🌫️</span>
                 </div>
-                <h4 className="text-lg font-semibold">CO₂ Emissions</h4>
+                <h4 className="text-lg font-semibold">SO₂ Emissions</h4>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">2.608 kg</span>
+                  <span className="text-sm text-orange-600">Belt Conveyor</span>
+                  <span className="font-bold text-orange-600">2.608×10⁴ kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-orange-500" style={{ width: '100%' }}></div>
-                  <div className="absolute h-full bg-gray-500" style={{ width: '92%', opacity: 0.3 }}></div>
+                  <div className="absolute h-full bg-orange-500" style={{ width: '52%' }}></div>
+                  <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">2.4 kg</span>
+                  <span className="font-bold text-gray-600">2.4×10⁴ kg</span>
                 </div>
                 <div className="text-center">
                   <span className="text-sm font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">+8.7% increase</span>
@@ -436,19 +470,19 @@ export default function LongDistanceConveyorPage() {
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Belt Conveyor</span>
-                  <span className="font-bold text-green-600">0.00652 kg</span>
+                  <span className="text-sm text-green-600">Belt Conveyor</span>
+                  <span className="font-bold text-green-600">6.52×10² kg</span>
                 </div>
                 <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="absolute h-full bg-green-500" style={{ width: '0.08%' }}></div>
+                  <div className="absolute h-full bg-green-500" style={{ width: '8.15%' }}></div>
                   <div className="absolute h-full bg-gray-500" style={{ width: '100%', opacity: 0.3 }}></div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Truck</span>
-                  <span className="font-bold text-gray-600">8.0 kg</span>
+                  <span className="font-bold text-gray-600">8×10³ kg</span>
                 </div>
                 <div className="text-center">
-                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-99.9% reduction</span>
+                  <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">-91.9% reduction</span>
                 </div>
               </div>
             </div>
@@ -459,7 +493,7 @@ export default function LongDistanceConveyorPage() {
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Environmental Impact Summary</h3>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
               Belt conveyors demonstrate superior environmental performance with <strong className="text-green-600">90%+ reduction</strong> in most emissions compared to truck transport. 
-              The only slight increase is in CO₂ emissions (+8.7%), while achieving massive reductions in harmful pollutants like NOx, CO, and dust particles.
+              The only slight increase is in SO₂ emissions (+8.7%), while achieving massive reductions in harmful pollutants like NOx, CO, fugitive dust and dust particles.
             </p>
           </div>
         </div>
